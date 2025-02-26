@@ -3,7 +3,7 @@
 # https://pypi.org/project/bcrypt/                                        #
 ###########################################################################
 
-import bcrypt
+from bcyrpt import bcrypt
 
 # Plain text password
 my_password = "I Am All The Jedi"
