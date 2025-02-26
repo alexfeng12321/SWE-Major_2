@@ -1,6 +1,19 @@
 import sqlite3 as sql
 import time
 import random
+from hash import *
+
+'''
+#check_password(cur.execute(f"GET password FROM users WHERE username = '{username}'"), password)
+# python3 user_management.py
+
+con = sql.connect("database_files/database.db")
+cur = con.cursor()
+#print(check_password(cur.execute(f"Select * FROM users WHERE username = '{"hi"}'"), password))
+cur.execute(f"SELECT password from users where username = 'alex'")
+storedHash = cur.fetchone()[0]
+print(check_password(storedHash, 'alex'))
+'''
 
 
 def insertUser(username, password, DoB):
@@ -22,7 +35,8 @@ def retrieveUsers(username, password):
         con.close()
         return False
     else:
-        cur.execute(f"SELECT * FROM users WHERE password = '{password}'")
+        #cur.execute(f"SELECT * FROM users WHERE password = '{password}'")
+        #cur.execute(f"GET password FROM users WHERE username = '{username}'")
         # Plain text log of visitor count as requested by Unsecure PWA management
         with open("visitor_log.txt", "r") as file:
             number = int(file.read().strip())
@@ -31,7 +45,10 @@ def retrieveUsers(username, password):
             file.write(str(number))
         # Simulate response time of heavy app for testing purposes
         time.sleep(random.randint(80, 90) / 1000)
-        if cur.fetchone() == None:
+        cur.execute(f"SELECT password from users where username = '{username}'")
+        storedHash = cur.fetchone()[0]
+        match = check_password(storedHash, password)
+        if match == False:
             con.close()
             return False
         else:

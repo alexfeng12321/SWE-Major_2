@@ -6,6 +6,7 @@ CREATE TABLE users(id INTEGER PRIMARY KEY autoincrement,username TEXT NOT NULL, 
 
 INSERT INTO users(username,password,dateOfBirth) VALUES ("admin","password","01/01/1990");
 
+
 SELECT * FROM extension;
 
 CREATE TABLE feedback(id INTEGER PRIMARY KEY autoincrement,feedback TEXT NOT NULL);
@@ -15,3 +16,4 @@ INSERT INTO feedback(feedback) VALUES ("In Shirlaw We Trust");
 -- DELETE FROM feedback WHERE id > 12;
 
 drop TABLE feedback
+

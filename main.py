@@ -3,12 +3,12 @@ from flask import render_template
 from flask import request
 from flask import redirect
 import user_management as dbHandler
+from hash import *
 
 # Code snippet for logging a message
 # app.logger.critical("message")
 
 app = Flask(__name__)
-
 
 @app.route("/success.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 def addFeedback():
@@ -34,6 +34,7 @@ def signup():
         username = request.form["username"]
         password = request.form["password"]
         DoB = request.form["dob"]
+        password = encode(password)
         dbHandler.insertUser(username, password, DoB)
         return render_template("/index.html")
     else:
