@@ -8,15 +8,11 @@ def encode(password):
     return bcrypt.hashpw(password=password, salt=salt)
     
 
-def check_password(hashed, entered):
-    entered = entered.encode()
-    print(entered)
-    print(bcrypt.checkpw(entered, hashed))
-    
-    if bcrypt.checkpw(entered, hashed):
-        return True
-    else:
-        return False
+def check_password(hashed, entered): 
+    entered = entered.encode() 
+    return bcrypt.checkpw(entered, hashed)
+
+
 
 
 
