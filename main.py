@@ -4,6 +4,7 @@ from flask import request
 from flask import redirect
 import user_management as dbHandler
 from hash import *
+from data_handler import *
 
 # Code snippet for logging a message
 # app.logger.critical("message")
@@ -31,12 +32,17 @@ def signup():
         url = request.args.get("url", "")
         return redirect(url, code=302)
     if request.method == "POST":
+        
         username = request.form["username"]
         password = request.form["password"]
-        DoB = request.form["dob"]
-        password = encode(password)
-        dbHandler.insertUser(username, password, DoB)
-        return render_template("/index.html")
+        if simple_check_password(password):
+            DoB = request.form["dob"]
+            password = encode(password)
+            dbHandler.insertUser(username, password, DoB)
+            return render_template("/index.html")   
+        else:
+            print("weak password")
+            return render_template("/weak_password.html") 
     else:
         return render_template("/signup.html")
 
