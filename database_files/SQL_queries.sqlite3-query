@@ -12,6 +12,7 @@ CREATE TABLE feedback(id INTEGER PRIMARY KEY autoincrement,feedback TEXT NOT NUL
 
 INSERT INTO feedback(feedback) VALUES ("In Shirlaw We Trust");
 
+-- delete values from feedback
 DELETE FROM feedback;
 
 drop TABLE feedback;

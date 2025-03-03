@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask import redirect
+from flask import session
 import user_management as dbHandler
 
 #rate limits
@@ -14,7 +15,7 @@ from data_handler import *
 
 #2fa
 import pyotp
-import qrcode
+from qrcode import QRCode
 import os
 import base64
 from io import BytesIO
@@ -65,7 +66,6 @@ def signup():
             dbHandler.insertUser(username, password, DoB)
             return render_template("/index.html")   
         else:
-            print("weak password")
             return render_template("/weak_password.html") 
     else:
         return render_template("/signup.html")
@@ -76,6 +76,7 @@ def signup():
 @limiter.limit("5 per minute")  # Add this line to limit login attempts
 def home():
     user_secret = pyotp.random_base32() #generate the one-time passcode
+    session['user_secret'] = user_secret 
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
         return redirect(url, code=302)
@@ -86,12 +87,14 @@ def home():
         if isLoggedIn:
             totp = pyotp.TOTP(user_secret)
             otp_uri = totp.provisioning_uri(name=username,issuer_name="NormoUnsecurePWA")
-            qr_code = qrcode.create(otp_uri)
+            qr = QRCode()
+            qr.add_data(otp_uri)
+            qr.make(fit=True)
             stream = BytesIO()
-            qr_code.png(stream, scale=5)
+            qr.make_image(fill='black', back_color='white').save(stream)
             qr_code_b64 = base64.b64encode(stream.getvalue()).decode('utf-8')
             dbHandler.listFeedback()
-            return render_template("/enable_2fa.html")
+            return render_template("/enable_2fa.html", qr_code=qr_code_b64)
             
             #return render_template("/success.html", value=username, state=isLoggedIn)
         else:
@@ -104,9 +107,14 @@ def home():
 def enable_2fa():
     if request.method == 'POST':
         otp_input = request.form['otp']
-        if totp.verify(otp_input):
-            return render_template('success.html')
-            #return redirect(url_for('home'))  # Redirect to home if OTP is valid
+        user_secret = session.get('user_secret')
+        if user_secret:
+            totp = pyotp.TOTP(user_secret)
+            if totp.verify(otp_input):
+                #return redirect(url_for('home'))  # Redirect to home if OTP is valid
+                return render_template('success.html')
+            else:
+                return "Invalid OTP. Please try again.", 401
         else:
             return "Invalid OTP. Please try again.", 401
 

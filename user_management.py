@@ -87,5 +87,21 @@ def listFeedback():
     f.close()
 
 
+#original
+'''
+def listFeedback():
+    con = sql.connect("database_files/database.db")
+    cur = con.cursor()
+    data = cur.execute("SELECT * FROM feedback").fetchall()
+    con.close()
+    f = open("templates/partials/success_feedback.html", "w")
+    f.write(f'<html lang="en">')
+    for row in data:
+        f.write("<p>\n")
+        f.write(f"{row[1]}\n")
+        f.write("</p>\n")
+    f.close()
+'''
+
 
 #   ' OR '1'='1'; DROP TABLE users;
