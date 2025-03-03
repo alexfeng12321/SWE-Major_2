@@ -84,7 +84,7 @@ def signup():
 
 @app.route("/index.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
 @app.route("/", methods=["POST", "GET"])
-@limiter.limit("5 per minute")  # Add this line to limit login attempts
+@limiter.limit("50 per minute")  # Add this line to limit login attempts
 def home():
     user_secret = pyotp.random_base32() #generate the one-time passcode
     session['user_secret'] = user_secret 
@@ -94,6 +94,8 @@ def home():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        session['username'] = username
+        session['password'] = password
         isLoggedIn = dbHandler.retrieveUsers(username, password)
         if isLoggedIn:
             totp = pyotp.TOTP(user_secret)
@@ -106,30 +108,31 @@ def home():
             qr_code_b64 = base64.b64encode(stream.getvalue()).decode('utf-8')
             dbHandler.listFeedback()
             return render_template("/enable_2fa.html", qr_code=qr_code_b64)
-            
-            #return render_template("/success.html", value=username, state=isLoggedIn)
         else:
             return render_template("/index.html")
     else:
         return render_template("/index.html")
 
+
+
 @app.route('/enable_2fa.html', methods=['POST', 'GET'])
 @app.route('/', methods=['POST', 'GET'])
 @csrf.exempt
 def enable_2fa():
+    if request.method == "GET" and request.args.get("url"):
+        url = request.args.get("url", "")
+        return redirect(url, code=302)
     if request.method == 'POST':
         otp_input = request.form['otp']
         user_secret = session.get('user_secret')
         if user_secret:
             totp = pyotp.TOTP(user_secret)
             if totp.verify(otp_input):
-                #return redirect(url_for('home'))  # Redirect to home if OTP is valid
-                return render_template('success.html')
+                return render_template('success.html', value=session.get('username'), state=True)
             else:
                 return "Invalid OTP. Please try again.", 401
         else:
             return "Invalid OTP. Please try again.", 401
-
 
 if __name__ == "__main__":
     app.config["TEMPLATES_AUTO_RELOAD"] = True
