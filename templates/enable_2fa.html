@@ -5,6 +5,8 @@
     <img src="data:image/png;base64,{{ qr_code }}" method="post" />
 
     <form action="/enable_2fa.html" method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
       <label for="otp">Enter the OTP from your app:</label><br />
       <input type="text" id="otp" name="otp" />
       <br />

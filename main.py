@@ -1,9 +1,11 @@
 from flask import Flask
-from flask import render_template
 from flask import request
 from flask import redirect
 from flask import session
 import user_management as dbHandler
+
+#CSRF Protection
+from flask_wtf.csrf import CSRFProtect
 
 #rate limits
 from flask_limiter import Limiter
@@ -19,11 +21,18 @@ from qrcode import QRCode
 import os
 import base64
 from io import BytesIO
+from flask import render_template
+
 
 # Code snippet for logging a message
 # app.logger.critical("message")
 
 app = Flask(__name__)
+
+#CSRF Protection
+csrf = CSRFProtect(app)
+
+
 #limit requests
 limiter = Limiter(
     get_remote_address,
@@ -31,7 +40,9 @@ limiter = Limiter(
     default_limits=["200 per day", "50 per hour"],
     storage_uri="memory://",
 )
+
 #2fa
+#code needs inital secret key setup
 app.secret_key = 'my_secret_key'
 
 
@@ -104,6 +115,7 @@ def home():
 
 @app.route('/enable_2fa.html', methods=['POST', 'GET'])
 @app.route('/', methods=['POST', 'GET'])
+@csrf.exempt
 def enable_2fa():
     if request.method == 'POST':
         otp_input = request.form['otp']
