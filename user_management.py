@@ -31,7 +31,6 @@ def retrieveUsers(username, password):
     con = sql.connect("database_files/database.db")
     cur = con.cursor()
     #cur.execute(f"SELECT * FROM users WHERE username = '{username}'")
-
     cur.execute(f"SELECT * FROM users WHERE username = ?", (username,),)
 
     if cur.fetchone() == None:
@@ -48,8 +47,6 @@ def retrieveUsers(username, password):
             file.write(str(number))
         # Simulate response time of heavy app for testing purposes
         time.sleep(random.randint(80, 90) / 1000)
-
-
         cur.execute(f"SELECT password from users where username = ?",
                     (username,))
         storedHash = cur.fetchone()[0]

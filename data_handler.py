@@ -6,8 +6,7 @@
 ##############################################
 import re
 import html
-import bcrypt
-
+from flask_bcrypt import bcrypt
 
 # A simple password check function that checks if the password is valid
 def simple_check_password(password: str) -> bool:
@@ -35,19 +34,17 @@ def check_password(password: str) -> bytes:
     if not issubclass(type(password), str):
         raise TypeError("Expected a string")
     if len(password) < 8:
-        raise ValueError("less than 8 characters")
-    if len(password) > 20:
-        raise ValueError("more than 10 characters")
+        raise ValueError("password needs to be more than 8 characters")
     if re.search(r"[ ]", password):
-        raise ValueError("contains ' ' space characters")
+        raise ValueError("password cannot contain a space")
     if not re.search(r"[A-Z]", password):
-        raise ValueError("does not contain uppercase letters")
+        raise ValueError("password does not contain uppercase letters")
     if not re.search(r"[a-z]", password):
-        raise ValueError("does not contain lowercase letters")
+        raise ValueError("password does not contain lowercase letters")
     if not re.search(r"[0-9]", password):
-        raise ValueError("does not contain a digit '0123456789'")
+        raise ValueError("password does not contain a digit '0123456789'")
     if not re.search(r"[@$!%*?&]", password):
-        raise ValueError("does not contain one of '@$!%*?&' special characters")
+        raise ValueError("password does not contain one of '@$!%*?&' special characters")
     # Password is returned encoded so it can't be accidently logged in a human readable format
     return password.encode()
 
