@@ -12,7 +12,7 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
 #encryption
-from hash import *
+from hash import *     
 from data_handler import *
 
 #2fa
@@ -48,21 +48,22 @@ limiter = Limiter(
 app.secret_key = 'my_secret_key'
 
 
-'''
+
 ALLOWED_URLS = [
     "/",
     "/index.html",
     "/signup.html",
     "/success.html",
-    "/enable_2fa.html"
+    "/enable_2fa.html",
+    "/logout"
 ]
 
-def is_safe_url(target):
+def is_safe_url(url):
     from urllib.parse import urlparse, urljoin
     ref_url = urlparse(request.host_url)
-    test_url = urlparse(urljoin(request.host_url, target))
-    return test_url.scheme in ('http', 'https') and ref_url.netloc == test_url.netloc and target in ALLOWED_URLS
-'''
+    test_url = urlparse(urljoin(request.host_url, url))
+    return test_url.scheme in ('http', 'https') and ref_url.netloc == test_url.netloc and url in ALLOWED_URLS
+
 
 
 app.config['SESSION_COOKIE_SAMESITE'] = 'strict'
@@ -104,15 +105,20 @@ def addFeedback():
     if session.get('username') is None:
         return redirect("/index.html")
     if request.method == "GET" and request.args.get("url"):
+
         url = request.args.get("url", "")
-        return redirect(url, code=302)
+        if is_safe_url(url):
+            return redirect(url, code=302)
+        else:
+            return "invalid url", 400
     if request.method == "POST":
         feedback = request.form["feedback"]
         dbHandler.insertFeedback(feedback)
-        dbHandler.listFeedback()
+        feedback_list = dbHandler.listFeedback()
+        print(feedback_list)
         render_success = render_template("partials/success_feedback.html")
-        render_feedback = render_template("/success.html", state=True, value=session.get('username'))
-        return render_feedback + render_success
+        render_feedback = render_template("/success.html", state=True, value=session.get('username'), feedback=feedback_list)
+        return render_feedback
         #return render_template("/success.html", state=True, value=session.get('username'))
     else:
         dbHandler.listFeedback()
@@ -144,7 +150,10 @@ def signup():
 def signup():
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
-        return redirect(url, code=302)
+        if is_safe_url(url):
+            return redirect(url, code=302)
+        else:
+            return "invalid url", 400
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
@@ -168,7 +177,10 @@ def home():
     session['user_secret'] = user_secret 
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
-        return redirect(url, code=302)
+        if is_safe_url(url):
+            return redirect(url, code=302)
+        else:
+            return "invalid url", 400
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
@@ -198,7 +210,10 @@ def home():
 def enable_2fa():
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
-        return redirect(url, code=302)
+        if is_safe_url(url):
+            return redirect(url, code=302)
+        else:
+            return "invalid url", 400
     if request.method == 'POST' :
         otp_input = request.form['otp']
         user_secret = session.get('user_secret')
@@ -213,16 +228,14 @@ def enable_2fa():
 
 @app.route("/logout", methods=["GET"])
 def logout():
-    session.clear()  # Clear the session data
+    session.clear()
     return redirect("/index.html")
-
 
 
 if __name__ == "__main__":
     app.config["TEMPLATES_AUTO_RELOAD"] = True
     app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
-    app.run(debug=True, host="0.0.0.0", port=5001)
+    app.run(debug=True, host="0.0.0.0", port=5001, ssl_context=('cert.pem', 'key.pem'))
     #app.run(debug=True, host="0.0.0.0", port=5001, ssl_context="adhoc")
-
 
 

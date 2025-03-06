@@ -1,9 +1,6 @@
 {% extends 'layout.html' %} {% block content %}
 <h1>Welcome {{ value }}!</h1>
 <form action="/success.html" method="post" class="box">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" /> -- can
-  remove this???
-
   <div class="input__wrapper">
     <input
       style="height: 100px; vertical-align: top"
@@ -22,5 +19,18 @@
 <hr />
 <br />
 <h1>Others feedback</h1>
+{% if feedback_list %}
+<ul>
+  {% for feedback in feedback_list %}
+  <li>{{ feedback }}</li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No feedback available.</p>
+{% endif %}
+
+<br />
+<br />
+
 <div>{% include "partials/success_feedback.html" %}</div>
 {% endblock %}

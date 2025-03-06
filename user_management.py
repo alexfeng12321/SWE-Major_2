@@ -82,6 +82,8 @@ def listFeedback():
             f.write("</p>\n")
     f.write(f'</html>')
     f.close()
+    con.close()
+    return data
 
 
 #original
