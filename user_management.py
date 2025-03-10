@@ -76,10 +76,9 @@ def listFeedback():
     f = open("templates/partials/success_feedback.html", "w")
     f.write(f'<html lang="en">')
     for row in data:
-        if "<" not in list(row[1]): 
-            f.write("<p>\n")
-            f.write(f"{row[1]}\n")
-            f.write("</p>\n")
+        f.write("<p>\n")
+        f.write(f"{row[1]}\n")
+        f.write("</p>\n")
     f.write(f'</html>')
     f.close()
     con.close()

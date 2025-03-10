@@ -49,8 +49,19 @@ def check_password(password: str) -> bytes:
     return password.encode()
 
 
+
+def validate_feedback(feedback):
+    if len(feedback) > 1000:
+        raise ValueError("Feedback is too long (max 1000 characters)")
+    if not re.search(r"[a-zA-Z0-9]", feedback):
+        raise ValueError("Feedback must contain at least one alphanumeric character")
+    print("test")
+    return feedback
+
+
+
 # Function to sanitise text manually
-def replace_characters(input_string: str) -> str:
+def sanitise_feedback(input_string: str) -> str:
     to_replace = ["<", ">", ";"]
     replacements = ["%3C", "%3E", "%3B"]
     char_list = list(input_string)
@@ -58,28 +69,20 @@ def replace_characters(input_string: str) -> str:
         if char_list[i] in to_replace:
             index = to_replace.index(char_list[i])
             char_list[i] = replacements[index]
+    return "".join(char_list)
+
+# A simple function to check a name is valid
+def validate_name(name: str) -> bool:
+    # Check if the name is valid (only alphabets allowed).
+    return True
+    if not name.isalpha():
+        raise ValueError("Name must only contain letters")
+    return name
 
 
 # Function to sanitise text using a library
 def make_web_safe(string: str) -> str:
     return html.escape(string)
-
-
-# Simple function to check if an email is valid
-def check_email(email: str) -> bool:
-    if re.fullmatch(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
-        return True
-    else:
-        return False
-
-
-# A simple function to check a name is valid
-def validate_name(name: str) -> bool:
-    # Check if the name is valid (only alphabets allowed).
-    if not name.isalpha():
-        return False
-    return True
-
 
 # A simple function to check a number is valid
 def validate_number(number: str) -> bool:
@@ -88,7 +91,9 @@ def validate_number(number: str) -> bool:
         return False
     return True
 
-
-# Function to salt a hash input
-def salt_and_hash(password: str) -> bytes:
-    return  # to be implemented
+# Simple function to check if an email is valid
+def check_email(email: str) -> bool:
+    if re.fullmatch(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+        return True
+    else:
+        return False
