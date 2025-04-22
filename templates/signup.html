@@ -29,5 +29,10 @@
   <div class="input__wrapper">
     <button type="submit" class="btn">Submit</button>
   </div>
+  {% if error %}
+  <p>Please change inputs:</p>
+  <br />
+  <div class="error">{{ error }}</div>
+  {% endif %}
 </form>
 {% endblock %}

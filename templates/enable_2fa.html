@@ -1,8 +1,10 @@
 <html>
+  <head>
+    <meta charset="utf-8" />
   <body>
     <h1>Welcome Enable 2FA {{ value }}!</h1>
     <h1>Scan this QR Code with Google Authenticator</h1>
-    <img src="data:image/png;base64,{{ qr_code }}" method="post" />
+    <img src="data:image/png;base64,{{ qr_code }}"/>
 
     <form action="/enable_2fa.html" method="post">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />

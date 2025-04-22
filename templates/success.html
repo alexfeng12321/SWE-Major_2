@@ -18,8 +18,17 @@
     <input type="submit" class="btn" value="Submit Feedback" />
   </div>
 </form>
-<hr />
+
+{% if error %}
+<p>Please change feedback as it is not valid:</p>
+<div class="error">{{ error }}</div>
+{% endif %}
 <br />
+
+<hr />
+
 <h1>Others feedback</h1>
+<br />
+
 <div>{% include "partials/success_feedback.html" %}</div>
 {% endblock %}

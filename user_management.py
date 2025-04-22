@@ -31,7 +31,6 @@ def retrieveUsers(username, password):
     con = sql.connect("database_files/database.db")
     cur = con.cursor()
     #cur.execute(f"SELECT * FROM users WHERE username = '{username}'")
-
     cur.execute(f"SELECT * FROM users WHERE username = ?", (username,),)
 
     if cur.fetchone() == None:
@@ -48,8 +47,6 @@ def retrieveUsers(username, password):
             file.write(str(number))
         # Simulate response time of heavy app for testing purposes
         time.sleep(random.randint(80, 90) / 1000)
-
-
         cur.execute(f"SELECT password from users where username = ?",
                     (username,))
         storedHash = cur.fetchone()[0]
@@ -79,12 +76,13 @@ def listFeedback():
     f = open("templates/partials/success_feedback.html", "w")
     f.write(f'<html lang="en">')
     for row in data:
-        if "<" not in list(row[1]): 
-            f.write("<p>\n")
-            f.write(f"{row[1]}\n")
-            f.write("</p>\n")
+        f.write("<p>\n")
+        f.write(f"{row[1]}\n")
+        f.write("</p>\n")
     f.write(f'</html>')
     f.close()
+    con.close()
+    return data
 
 
 #original
