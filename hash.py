@@ -13,12 +13,6 @@ def check_password(hashed, entered):
     return bcrypt.checkpw(entered, hashed)
 
 
-
-
-
-
-
-
 '''
 print(f"How actual password will appear in logs etc: {encoded_password.hex()}")
 
