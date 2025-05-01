@@ -70,7 +70,7 @@ app.secret_key = 'my_secret_key'
 '''
 ALLOWED_URLS = [
     "/",
-    "/index.html",
+    "/login.html",
     "/signup.html",
     "/success.html",
     "/enable_2fa.html",
@@ -121,6 +121,70 @@ def set_security_headers(response):
     return response
 
 
+@app.route("/login.html", methods=["POST", "GET"])
+@app.route("/", methods=["POST", "GET"])
+#@limiter.limit("50 per minute")
+@csrf.exempt
+def login():
+        return render_template('/home.html', code=302)
+        '''
+    return render_template("/home.html")
+
+    user_secret = pyotp.random_base32() #generate the one-time passcode
+    session['user_secret'] = user_secret 
+    if request.method == "GET" and request.args.get("url"):
+        url = request.args.get("url", "")
+        return redirect(url, code=302)
+        '''
+        if is_safe_url(url):
+            return redirect(url, code=302)
+        else:
+            return "invalid url", 400
+        '''
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        isLoggedIn = dbHandler.retrieveUsers(username, password)
+        if isLoggedIn:
+            dbHandler.listFeedback()
+            return render_template("/home.html", value=username, state=isLoggedIn)
+        else:
+            return render_template("/login.html")
+    else:
+        return render_template("/login.html")
+        '''
+        username = request.form["username"]
+        try:
+            validate_name(username)
+            password = request.form["password"]
+            isLoggedIn = dbHandler.retrieveUsers(username, password)
+            if isLoggedIn:
+                session['username'] = username
+                totp = pyotp.TOTP(user_secret)
+                otp_uri = totp.provisioning_uri(name=username,issuer_name="NormoUnsecurePWA")
+                qr = QRCode()
+                qr.add_data(otp_uri)
+                qr.make(fit=True)
+                stream = BytesIO()
+                qr.make_image(fill='black', back_color='white').save(stream)
+                qr_code_b64 = base64.b64encode(stream.getvalue()).decode('utf-8')
+                dbHandler.listFeedback()
+                return render_template("/enable_2fa.html", qr_code=qr_code_b64)
+            else:
+                return render_template("/login.html")
+        except (TypeError, ValueError) as e:
+            return render_template("/login.html", error=str(e))
+            '''
+    
+'''
+
+@app.route("/home.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
+#@limiter.limit("50 per minute")
+@csrf.exempt
+def home():
+    if request.method == "GET" and request.args.get("url"):
+        url = request.args.get("url", "")
+        return redirect(url, code=302)
 
 
 @app.route("/success.html", methods=["POST", "GET"])
@@ -128,7 +192,7 @@ def set_security_headers(response):
 #@limiter.limit("50 per minute")
 def addFeedback():
     if session.get('username') is None:
-        return redirect("/index.html")
+        return redirect("/login.html")
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
         return redirect(url, code=302)
@@ -171,7 +235,7 @@ def signup():
             DoB = request.form["dob"]
             password = encode(password)
             dbHandler.insertUser(username, password, DoB)
-            return render_template("/index.html")   
+            return render_template("/login.html")   
         else:
             return render_template("/weak_password.html") 
     else:
@@ -199,7 +263,7 @@ def signup():
 
         password = encode(password)
         dbHandler.insertUser(username, password, DoB)
-        return render_template("/index.html")
+        return render_template("/login.html")
 
         '''
         try:
@@ -208,7 +272,7 @@ def signup():
             DoB = request.form["dob"]
             password = encode(password)
             dbHandler.insertUser(username, password, DoB)
-            return render_template("/index.html")
+            return render_template("/login.html")
         except (TypeError, ValueError) as e:
             return render_template("/signup.html", error=str(e))
     '''
@@ -216,58 +280,6 @@ def signup():
         return render_template("/signup.html")
 
 
-@app.route("/index.html", methods=["POST", "GET"])
-@app.route("/", methods=["POST", "GET"])
-#@limiter.limit("50 per minute")
-@csrf.exempt
-def home():
-    user_secret = pyotp.random_base32() #generate the one-time passcode
-    session['user_secret'] = user_secret 
-    if request.method == "GET" and request.args.get("url"):
-        url = request.args.get("url", "")
-        return redirect(url, code=302)
-        '''
-        if is_safe_url(url):
-            return redirect(url, code=302)
-        else:
-            return "invalid url", 400
-        '''
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        isLoggedIn = dbHandler.retrieveUsers(username, password)
-        if isLoggedIn:
-            dbHandler.listFeedback()
-            return render_template("/success.html", value=username, state=isLoggedIn)
-        else:
-            return render_template("/index.html")
-    else:
-        return render_template("/index.html")
-        '''
-        username = request.form["username"]
-        try:
-            validate_name(username)
-            password = request.form["password"]
-            isLoggedIn = dbHandler.retrieveUsers(username, password)
-            if isLoggedIn:
-                session['username'] = username
-                totp = pyotp.TOTP(user_secret)
-                otp_uri = totp.provisioning_uri(name=username,issuer_name="NormoUnsecurePWA")
-                qr = QRCode()
-                qr.add_data(otp_uri)
-                qr.make(fit=True)
-                stream = BytesIO()
-                qr.make_image(fill='black', back_color='white').save(stream)
-                qr_code_b64 = base64.b64encode(stream.getvalue()).decode('utf-8')
-                dbHandler.listFeedback()
-                return render_template("/enable_2fa.html", qr_code=qr_code_b64)
-            else:
-                return render_template("/index.html")
-        except (TypeError, ValueError) as e:
-            return render_template("/index.html", error=str(e))
-            '''
-    
-'''
 @app.route('/enable_2fa.html', methods=['POST', 'GET'])
 @app.route('/', methods=['POST', 'GET'])
 @csrf.exempt
@@ -293,12 +305,12 @@ def enable_2fa():
                 return "Invalid OTP. Please try again.", 401
         else:
             return "Invalid OTP. Please try again.", 401
-'''
+
             
 @app.route("/logout", methods=["GET"])
 def logout():
     session.clear()
-    return redirect("/index.html")
+    return redirect("/login.html")
 
 
 if __name__ == "__main__":

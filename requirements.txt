@@ -7,3 +7,5 @@ qrcode
 pyotp
 bcrypt
 flask_bcrypt
+flask-login
+flask-sqlalchemy
