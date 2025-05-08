@@ -1,633 +1,197 @@
-<!DOCTYPE html>
-<html style="font-size: 16px" lang="en">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta charset="utf-8" />
-    <meta name="keywords" content="Confirm Booking" />
-    <meta name="description" content="" />
-    <title>Home</title>
-    <link rel="stylesheet" href="static/css/nicepage.css" media="screen" />
-    <link rel="stylesheet" href="static/css/Home.css" media="screen" />
-    <script
-      class="u-script"
-      type="text/javascript"
-      src="static/js/jquery.js"
-      defer=""
-    ></script>
-    <script
-      class="u-script"
-      type="text/javascript"
-      src="static/js/nicepage.js"
-      defer=""
-    ></script>
-    <meta name="generator" content="Nicepage 7.7.3, nicepage.com" />
-    <meta name="referrer" content="origin" />
-
-    <link
-      id="u-theme-google-font"
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i"
-    />
-    <script type="application/ld+json">
-      {
-        "@context": "http://schema.org",
-        "@type": "Organization",
-        "name": "",
-        "logo": "images/default-logo.png"
-      }
-    </script>
-    <meta name="theme-color" content="#478ac9" />
-    <meta property="og:title" content="Home" />
-    <meta property="og:type" content="website" />
-    <meta data-intl-tel-input-cdn-path="intlTelInput/" />
-  </head>
-  <body
-    data-path-to-root="./"
-    data-include-products="false"
-    class="u-body u-xl-mode"
-    data-lang="en"
+{% extends 'template.html' %} {% block content %}
+<section class="u-clearfix u-section-1" id="block-6">
+  <div
+    class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1"
   >
-    <header class="u-clearfix u-header u-header" id="header">
-      <div
-        class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1"
-      >
-        <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+    <div
+      class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1"
+    >
+      <div class="u-layout">
+        <div class="u-layout-row">
           <div
-            class="menu-collapse"
-            style="font-size: 1rem; letter-spacing: 0px"
+            class="u-container-align-center u-container-style u-layout-cell u-size-15 u-layout-cell-1"
           >
-            <a
-              class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-hamburger-link u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-              href="#"
-            >
-              <svg class="u-svg-link" viewBox="0 0 24 24">
-                <use xlink:href="#menu-hamburger"></use>
-              </svg>
-              <svg
-                class="u-svg-content"
-                version="1.1"
-                id="menu-hamburger"
-                viewBox="0 0 16 16"
-                x="0px"
-                y="0px"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g>
-                  <rect y="1" width="16" height="2"></rect>
-                  <rect y="7" width="16" height="2"></rect>
-                  <rect y="13" width="16" height="2"></rect>
-                </g>
-              </svg>
-            </a>
-          </div>
-          <div class="u-custom-menu u-nav-container">
-            <ul class="u-nav u-unstyled u-nav-1">
-              <li class="u-nav-item">
-                <a
-                  class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                  href="Home.html"
-                  style="padding: 10px 20px"
-                  >Home</a
-                >
-              </li>
-              <li class="u-nav-item">
-                <a
-                  class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                  href="./"
-                  style="padding: 10px 20px"
-                  >Login</a
-                >
-              </li>
-              <li class="u-nav-item">
-                <a
-                  class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                  href="Signup.html"
-                  style="padding: 10px 20px"
-                  >Signup</a
-                >
-              </li>
-              <li class="u-nav-item">
-                <a
-                  class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                  href="blog/blog.html"
-                  style="padding: 10px 20px"
-                  >Blog</a
-                >
-              </li>
-            </ul>
-          </div>
-          <div class="u-custom-menu u-nav-container-collapse">
             <div
-              class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav"
+              class="u-container-layout u-valign-bottom u-container-layout-1"
             >
-              <div class="u-inner-container-layout u-sidenav-overflow">
-                <div class="u-menu-close"></div>
-                <ul
-                  class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"
-                >
-                  <li class="u-nav-item">
-                    <a class="u-button-style u-nav-link" href="Home.html"
-                      >Home</a
-                    >
-                  </li>
-                  <li class="u-nav-item">
-                    <a class="u-button-style u-nav-link" href="./">Login</a>
-                  </li>
-                  <li class="u-nav-item">
-                    <a class="u-button-style u-nav-link" href="Signup.html"
-                      >Signup</a
-                    >
-                  </li>
-                  <li class="u-nav-item">
-                    <a class="u-button-style u-nav-link" href="blog/blog.html"
-                      >Blog</a
-                    >
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
-          </div>
-        </nav>
-        <a href="#" class="u-image u-logo u-image-1">
-          <img
-            src="images/default-logo.png"
-            class="u-logo-image u-logo-image-1"
-          />
-        </a>
-        <p class="u-align-center u-text u-text-default u-text-1">
-          Website_Name
-        </p>
-      </div>
-    </header>
-    <section class="u-clearfix u-section-1" id="block-6">
-      <div
-        class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1"
-      >
-        <div
-          class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1"
-        >
-          <div class="u-layout">
-            <div class="u-layout-row">
               <div
-                class="u-container-align-center u-container-style u-layout-cell u-size-15 u-layout-cell-1"
+                class="u-container-style u-expanded-width u-group u-white u-group-1"
               >
-                <div
-                  class="u-container-layout u-valign-bottom u-container-layout-1"
-                >
-                  <div
-                    class="u-container-style u-expanded-width u-group u-white u-group-1"
-                  >
-                    <div class="u-container-layout u-container-layout-2">
-                      <h3 class="u-text u-text-1">Announcements</h3>
-                      <p class="u-text u-text-default u-text-2">
-                        Announcement 1<br />Announcement 2<br />Announcement
-                        3<br />
-                        <br />
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    class="u-container-style u-expanded-width u-group u-white u-group-2"
-                  >
-                    <div class="u-container-layout u-container-layout-3">
-                      <h3 class="u-text u-text-default u-text-3">
-                        Assignments<br />
-                      </h3>
-                      <p class="u-text u-text-default u-text-4">
-                        Assignment - Due Date<br />Assignment - Due Date
-                        <br />Assignment - Due Date
-                      </p>
-                      <a
-                        href=""
-                        class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-1"
-                        >See Details
-                      </a>
-                    </div>
-                  </div>
-                  <div
-                    class="u-container-style u-expanded-width u-group u-white u-group-3"
-                  >
-                    <div class="u-container-layout u-container-layout-4">
-                      <h3 class="u-text u-text-default u-text-5">
-                        Tutorials<br />
-                      </h3>
-                      <p class="u-text u-text-default u-text-6">Coming Soon</p>
-                      <a
-                        href=""
-                        class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-2"
-                        >See more
-                      </a>
-                    </div>
-                  </div>
+                <div class="u-container-layout u-container-layout-2">
+                  <h3 class="u-text u-text-1">Announcements</h3>
+                  <p class="u-text u-text-default u-text-2">
+                    Announcement 1<br />Announcement 2<br />Announcement 3<br />
+                    <br />
+                  </p>
                 </div>
               </div>
               <div
-                class="u-container-style u-layout-cell u-shape-rectangle u-size-45 u-layout-cell-2"
+                class="u-container-style u-expanded-width u-group u-white u-group-2"
               >
-                <div
-                  class="u-container-layout u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-5"
-                >
-                  <h3 class="u-text u-text-default u-text-7">Questions</h3>
+                <div class="u-container-layout u-container-layout-3">
+                  <h3 class="u-text u-text-default u-text-3">
+                    Assignments<br />
+                  </h3>
+                  <p class="u-text u-text-default u-text-4">
+                    Assignment - Due Date<br />Assignment - Due Date
+                    <br />Assignment - Due Date
+                  </p>
                   <a
-                    href="Ask-Question.html"
-                    data-page-id="955523170"
-                    class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-3"
-                    title="Ask Question"
-                    >Ask Question</a
-                  ><!--blog--><!--blog_options_json--><!--{"type":"Tags","source":"","tags":"","count":"9"}--><!--/blog_options_json-->
-                  <div
-                    class="custom-expanded u-blog u-container-style u-layout-grid u-blog-1"
-                    data-site-sorting-prop="created"
-                    data-site-sorting-order="desc"
-                    data-max-items="9"
-                    data-items-per-page="1"
-                    data-blog-source-type="Tags"
-                    data-blog-id="blog-1"
-                  >
-                    <div class="u-list-control"></div>
-                    <div class="u-repeater u-repeater-1">
-                      <!--blog_post-->
-                      <div
-                        class="u-blog-post u-border-1 u-border-grey-50 u-border-no-bottom u-border-no-left u-border-no-right u-container-style u-repeater-item u-repeater-item-1"
-                      >
-                        <div
-                          class="u-container-layout u-similar-container u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-6"
-                        >
-                          <!--blog_post_content-->
-                          <div
-                            class="u-blog-control u-post-content u-text u-text-8 fr-view"
-                          >
-                            I have figured out how to use PowerShell with task
-                            scheduler to give me what I am looking for. However,
-                            I am unable to figure out how to do this with a wmi
-                            query so we can pull this information from ...
-                          </div>
-                          <!--/blog_post_content--><!--blog_post_tags-->
-                          <div class="u-blog-control u-post-tags u-post-tags-1">
-                            <!--blog_post_tags_content-->
-                            <a>Tag 1</a>,<a>Tag 2</a>,<a>Tag 3</a
-                            ><!--/blog_post_tags_content-->
-                          </div>
-                          <!--/blog_post_tags--><!--blog_post_readmore-->
-                          <a
-                            href="blog/prog-comp-22222.html"
-                            class="u-active-none u-blog-control u-border-2 u-border-no-left u-border-no-right u-border-no-top u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-btn-4"
-                            ><!--blog_post_readmore_content--><!--options_json--><!--{"content":"","defaultValue":"Read More"}--><!--/options_json-->Read
-                            More<!--/blog_post_readmore_content--></a
-                          ><!--/blog_post_readmore-->
-                        </div>
-                      </div>
-                      <div
-                        class="u-blog-post u-border-1 u-border-grey-50 u-border-no-bottom u-border-no-left u-border-no-right u-container-style u-repeater-item u-repeater-item-2"
-                      >
-                        <div
-                          class="u-container-layout u-similar-container u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-7"
-                        >
-                          <!--blog_post_content-->
-                          <div
-                            class="u-blog-control u-post-content u-text u-text-9 fr-view"
-                          >
-                            Why does iter() behave differently for [i32] vs
-                            Vec<i32>
-                              ? From my understanding so far, iter() is supposed
-                              to return an immutable reference. In the case of a
-                              vector, after the for loop on the ...</i32
-                            >
-                          </div>
-                          <!--/blog_post_content--><!--blog_post_tags-->
-                          <div class="u-blog-control u-post-tags u-post-tags-2">
-                            <!--blog_post_tags_content-->
-                            <a>Tag 1</a>,<a>Tag 2</a>,<a>Tag 3</a
-                            ><!--/blog_post_tags_content-->
-                          </div>
-                          <!--/blog_post_tags--><!--blog_post_readmore-->
-                          <a
-                            href="blog/problem-set-2.html"
-                            class="u-active-none u-blog-control u-border-2 u-border-no-left u-border-no-right u-border-no-top u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-btn-5"
-                            ><!--blog_post_readmore_content--><!--options_json--><!--{"content":"","defaultValue":"Read More"}--><!--/options_json-->Read
-                            More<!--/blog_post_readmore_content--></a
-                          ><!--/blog_post_readmore-->
-                        </div>
-                      </div>
-                      <div
-                        class="u-blog-post u-border-1 u-border-grey-50 u-border-no-bottom u-border-no-left u-border-no-right u-container-style u-repeater-item u-repeater-item-3"
-                      >
-                        <div
-                          class="u-container-layout u-similar-container u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-8"
-                        >
-                          <!--blog_post_content-->
-                          <div
-                            class="u-blog-control u-post-content u-text u-text-10 fr-view"
-                          >
-                            I'm having a bit of a problem with an sqlite3
-                            implementation in swift not updating a balance
-                            field. The table is defined as follows: class User {
-                            var id: Int var uid: String var balance: ... &nbsp;
-                          </div>
-                          <!--/blog_post_content--><!--blog_post_tags-->
-                          <div class="u-blog-control u-post-tags u-post-tags-3">
-                            <!--blog_post_tags_content-->
-                            <a>Tag 1</a>,<a>Tag 2</a>,<a>Tag 3</a
-                            ><!--/blog_post_tags_content-->
-                          </div>
-                          <!--/blog_post_tags--><!--blog_post_readmore-->
-                          <a
-                            href="blog/problem-set-1.html"
-                            class="u-active-none u-blog-control u-border-2 u-border-no-left u-border-no-right u-border-no-top u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-btn-6"
-                            ><!--blog_post_readmore_content--><!--options_json--><!--{"content":"","defaultValue":"Read More"}--><!--/options_json-->Read
-                            More<!--/blog_post_readmore_content--></a
-                          ><!--/blog_post_readmore-->
-                        </div>
-                      </div>
-                      <!--/blog_post--><!--blog_post-->
-                      <!--/blog_post--><!--blog_post-->
-                      <!--/blog_post-->
-                    </div>
-                    <div class="u-list-control"></div>
-                  </div>
-                  <!--/blog-->
+                    href=""
+                    class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-1"
+                    >See Details
+                  </a>
+                </div>
+              </div>
+              <div
+                class="u-container-style u-expanded-width u-group u-white u-group-3"
+              >
+                <div class="u-container-layout u-container-layout-4">
+                  <h3 class="u-text u-text-default u-text-5">
+                    Tutorials<br />
+                  </h3>
+                  <p class="u-text u-text-default u-text-6">Coming Soon</p>
+                  <a
+                    href=""
+                    class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-2"
+                    >See more
+                  </a>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-    <section class="u-clearfix u-section-2" id="block-8">
-      <div class="u-clearfix u-sheet u-sheet-1"></div>
-    </section>
-    <section class="u-clearfix u-grey-5 u-section-3" id="block-7">
-      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <div
-          class="u-align-center u-btn-round u-calendar u-radius u-spacing-30 u-white u-calendar-1"
-          data-href="#popup-7af4"
-          data-calendar-token="eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkEyNTZHQ00ifQ.LxtkWyhcavMRuO273qrzjBs8k0W8DoKVeMiNdZICkBAus2ZVqKvgk2MsJiZ01C19rGPxg0L6btEihSiwB_KCVHHcZSRmJcmyOG7wno3m1fWeGYRFifEryGPaRjnje1hiiSIKcipQmh1Z8ePHnsCpIVnLtNkoCV6-3u20bvlaSr0wHL8rIMQ2v4kPgwLSZ6bLXNceHxG-49H4OU83MoOK0cYgAt952XNVxuEqQT8avtSK643PgUSFMnd6stzGsebwGH06JhNUi6Tc6AWIy7Chv2MA7ecVWiWf8EfX3WGuhWVYat_XP2zsre9tSGnKfh0_iVYRQ2OYhk4ePDeNQPiNKg.K4y3RAucjNghUguA.J09wfwuUwfY_U3ftktQJb79FsuFQH3fExY2ejYGGaRp4LTDf_H1hROXGANGrChzle6SpT5siPWdKwCldUvEm_JSaLbi2.iS7DlnCMfqcRmKBhC75d5g"
-        >
-          <div class="u-datepicker-container" style="position: relative">
-            <div class="datepicker"></div>
-          </div>
-          <div class="u-calendar-time-container">
-            <div class="u-calendar-time-container-inner">
-              <div class="u-calendar-timezone u-text"></div>
-              <ul class="u-calendar-time-list u-unstyled" style="height: 355px">
-                <li
-                  class="fake u-active-palette-1-base u-border-2 u-border-active-white u-border-hover-white u-border-white u-btn-round u-calendar-time-slot u-grey-5 u-hidden u-hover-palette-1-base u-radius u-text-black u-calendar-time-slot-1"
-                >
-                  --:--
-                </li>
-              </ul>
+          <div
+            class="u-container-style u-layout-cell u-shape-rectangle u-size-45 u-layout-cell-2"
+          >
+            <div
+              class="u-container-layout u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-5"
+            >
+              <h3 class="u-text u-text-default u-text-7">Questions</h3>
+              <a
+                href="Ask-Question.html"
+                data-page-id="955523170"
+                class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-3"
+                title="Ask Question"
+                >Ask Question</a
+              ><!--blog--><!--blog_options_json--><!--{"type":"Tags","source":"","tags":"","count":"9"}--><!--/blog_options_json-->
+              <div
+                class="custom-expanded u-blog u-container-style u-layout-grid u-blog-1"
+                data-site-sorting-prop="created"
+                data-site-sorting-order="desc"
+                data-max-items="9"
+                data-items-per-page="1"
+                data-blog-source-type="Tags"
+                data-blog-id="blog-1"
+              >
+                <div class="u-list-control"></div>
+                <div class="u-repeater u-repeater-1">
+                  <!--blog_post-->
+                  <div
+                    class="u-blog-post u-border-1 u-border-grey-50 u-border-no-bottom u-border-no-left u-border-no-right u-container-style u-repeater-item u-repeater-item-1"
+                  >
+                    <div
+                      class="u-container-layout u-similar-container u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-6"
+                    >
+                      <!--blog_post_content-->
+                      <div
+                        class="u-blog-control u-post-content u-text u-text-8 fr-view"
+                      >
+                        I have figured out how to use PowerShell with task
+                        scheduler to give me what I am looking for. However, I
+                        am unable to figure out how to do this with a wmi query
+                        so we can pull this information from ...
+                      </div>
+                      <!--/blog_post_content--><!--blog_post_tags-->
+                      <div class="u-blog-control u-post-tags u-post-tags-1">
+                        <!--blog_post_tags_content-->
+                        <a>Tag 1</a>,<a>Tag 2</a>,<a>Tag 3</a
+                        ><!--/blog_post_tags_content-->
+                      </div>
+                      <!--/blog_post_tags--><!--blog_post_readmore-->
+                      <a
+                        href="blog/prog-comp-22222.html"
+                        class="u-active-none u-blog-control u-border-2 u-border-no-left u-border-no-right u-border-no-top u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-btn-4"
+                        ><!--blog_post_readmore_content--><!--options_json--><!--{"content":"","defaultValue":"Read More"}--><!--/options_json-->Read
+                        More<!--/blog_post_readmore_content--></a
+                      ><!--/blog_post_readmore-->
+                    </div>
+                  </div>
+                  <div
+                    class="u-blog-post u-border-1 u-border-grey-50 u-border-no-bottom u-border-no-left u-border-no-right u-container-style u-repeater-item u-repeater-item-2"
+                  >
+                    <div
+                      class="u-container-layout u-similar-container u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-7"
+                    >
+                      <!--blog_post_content-->
+                      <div
+                        class="u-blog-control u-post-content u-text u-text-9 fr-view"
+                      >
+                        Why does iter() behave differently for [i32] vs Vec<i32>
+                          ? From my understanding so far, iter() is supposed to
+                          return an immutable reference. In the case of a
+                          vector, after the for loop on the ...</i32
+                        >
+                      </div>
+                      <!--/blog_post_content--><!--blog_post_tags-->
+                      <div class="u-blog-control u-post-tags u-post-tags-2">
+                        <!--blog_post_tags_content-->
+                        <a>Tag 1</a>,<a>Tag 2</a>,<a>Tag 3</a
+                        ><!--/blog_post_tags_content-->
+                      </div>
+                      <!--/blog_post_tags--><!--blog_post_readmore-->
+                      <a
+                        href="blog/problem-set-2.html"
+                        class="u-active-none u-blog-control u-border-2 u-border-no-left u-border-no-right u-border-no-top u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-btn-5"
+                        ><!--blog_post_readmore_content--><!--options_json--><!--{"content":"","defaultValue":"Read More"}--><!--/options_json-->Read
+                        More<!--/blog_post_readmore_content--></a
+                      ><!--/blog_post_readmore-->
+                    </div>
+                  </div>
+                  <div
+                    class="u-blog-post u-border-1 u-border-grey-50 u-border-no-bottom u-border-no-left u-border-no-right u-container-style u-repeater-item u-repeater-item-3"
+                  >
+                    <div
+                      class="u-container-layout u-similar-container u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-8"
+                    >
+                      <!--blog_post_content-->
+                      <div
+                        class="u-blog-control u-post-content u-text u-text-10 fr-view"
+                      >
+                        I'm having a bit of a problem with an sqlite3
+                        implementation in swift not updating a balance field.
+                        The table is defined as follows: class User { var id:
+                        Int var uid: String var balance: ... &nbsp;
+                      </div>
+                      <!--/blog_post_content--><!--blog_post_tags-->
+                      <div class="u-blog-control u-post-tags u-post-tags-3">
+                        <!--blog_post_tags_content-->
+                        <a>Tag 1</a>,<a>Tag 2</a>,<a>Tag 3</a
+                        ><!--/blog_post_tags_content-->
+                      </div>
+                      <!--/blog_post_tags--><!--blog_post_readmore-->
+                      <a
+                        href="blog/problem-set-1.html"
+                        class="u-active-none u-blog-control u-border-2 u-border-no-left u-border-no-right u-border-no-top u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-btn-6"
+                        ><!--blog_post_readmore_content--><!--options_json--><!--{"content":"","defaultValue":"Read More"}--><!--/options_json-->Read
+                        More<!--/blog_post_readmore_content--></a
+                      ><!--/blog_post_readmore-->
+                    </div>
+                  </div>
+                  <!--/blog_post--><!--blog_post-->
+                  <!--/blog_post--><!--blog_post-->
+                  <!--/blog_post-->
+                </div>
+                <div class="u-list-control"></div>
+              </div>
+              <!--/blog-->
             </div>
           </div>
-          <div class="u-calendar-no-slots-message">
-            There are no available time slots for this date.
-          </div>
-          <div class="u-calendar-success-message">
-            You have successfully booked the appointment.
-          </div>
-          <div class="u-calendar-conflict-message">
-            Unable to book the appointment for this time slot. Please book
-            another one.
-          </div>
-          <div class="u-calendar-error-message">
-            An unexpected error occurred.
-          </div>
         </div>
       </div>
-    </section>
-
-    <footer
-      class="u-align-center u-clearfix u-container-align-center u-footer u-grey-80 u-footer"
-      id="footer"
-    >
-      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <p class="u-align-center u-small-text u-text u-text-variant u-text-1">
-          Copyright © Alex Feng Made For Software Engineering Major Work<br />
-        </p>
-      </div>
-    </footer>
-    <section class="u-backlink u-clearfix u-grey-80">
-      <p class="u-text">
-        <span>This site was created with the </span>
-        <a
-          class="u-link"
-          href="https://nicepage.com/"
-          target="_blank"
-          rel="nofollow"
-          ><span>Nicepage</span>
-        </a>
-      </p>
-    </section>
-    <section
-      class="u-align-center u-black u-clearfix u-container-align-center u-container-style u-dialog-block u-opacity u-opacity-70 u-valign-middle u-dialog-section-7"
-      id="popup-7af4"
-    >
-      <div
-        class="u-align-center u-border-1 u-border-white u-container-align-center u-container-align-left-xl u-container-style u-dialog u-radius-5 u-shape-round u-white u-dialog-1"
-      >
-        <div class="u-container-layout u-valign-top u-container-layout-1">
-          <h2 class="u-align-left u-text u-text-1">Confirm Booking</h2>
-          <p class="u-align-left u-text u-text-palette-1-base u-text-2">
-            9:30 - 10:00 AM, Friday 8th November, 2024
-          </p>
-          <div class="u-expanded-width u-form u-form-1">
-            <form
-              action="https://forms.nicepagesrv.com/v2/form/process"
-              class="u-clearfix u-form-spacing-19 u-form-vertical u-inner-form"
-              style="padding: 0px"
-              source="email"
-              name="form"
-            >
-              <div class="u-form-group u-form-name u-form-group-1">
-                <label for="name-3e72" class="u-form-control-hidden u-label"
-                  >Name</label
-                >
-                <input
-                  type="text"
-                  placeholder="Enter your Name"
-                  id="name-3e72"
-                  name="name"
-                  class="u-border-1 u-border-grey-25 u-input u-input-rectangle u-radius u-input-1"
-                  required=""
-                />
-              </div>
-              <div class="u-form-email u-form-group u-form-group-2">
-                <label for="email-3e72" class="u-form-control-hidden u-label"
-                  >Email</label
-                >
-                <input
-                  type="email"
-                  placeholder="Enter a valid email address"
-                  id="email-3e72"
-                  name="email"
-                  class="u-border-1 u-border-grey-25 u-input u-input-rectangle u-radius u-input-2"
-                  required=""
-                />
-              </div>
-              <div
-                class="u-align-left u-form-group u-form-submit u-form-group-3"
-              >
-                <a
-                  href="#"
-                  class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-palette-1-base u-radius-5 u-btn-1"
-                  >Confirm</a
-                >
-                <input
-                  type="submit"
-                  value="submit"
-                  class="u-form-control-hidden"
-                />
-              </div>
-              <div class="u-form-send-message u-form-send-success">
-                Thank you! Your message has been sent.
-              </div>
-              <div class="u-form-send-error u-form-send-message">
-                Unable to send your message. Please fix errors then try again.
-              </div>
-              <input type="hidden" value="" name="recaptchaResponse" />
-              <input
-                type="hidden"
-                name="formServices"
-                value="9044d0fe-33ab-eae3-f9fe-9cce2b0c5f57"
-              />
-            </form>
-          </div>
-        </div>
-        <button class="u-dialog-close-button u-icon u-text-grey-50 u-icon-1">
-          <svg
-            class="u-svg-link"
-            preserveAspectRatio="xMidYMin slice"
-            viewBox="0 0 413.348 413.348"
-            style=""
-          >
-            <use
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              xlink:href="#svg-1ce9"
-            ></use></svg
-          ><svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            version="1.1"
-            xml:space="preserve"
-            class="u-svg-content"
-            viewBox="0 0 413.348 413.348"
-            id="svg-1ce9"
-          >
-            <path
-              d="m413.348 24.354-24.354-24.354-182.32 182.32-182.32-182.32-24.354 24.354 182.32 182.32-182.32 182.32 24.354 24.354 182.32-182.32 182.32 182.32 24.354-24.354-182.32-182.32z"
-            ></path>
-          </svg>
-        </button>
-      </div>
-    </section>
-    <style>
-      .u-dialog-section-7 .u-dialog-1 {
-        width: 683px;
-        min-height: 392px;
-        height: auto;
-        margin: 60px auto;
-      }
-
-      .u-dialog-section-7 .u-container-layout-1 {
-        padding: 40px;
-      }
-
-      .u-dialog-section-7 .u-text-1 {
-        font-size: 2.25rem;
-        width: auto;
-        margin: 0;
-      }
-
-      .u-dialog-section-7 .u-text-2 {
-        width: auto;
-        font-weight: 700;
-        margin: 20px 0 0;
-      }
-
-      .u-dialog-section-7 .u-form-1 {
-        height: 204px;
-        width: 601px;
-        margin: 32px 0 0;
-      }
-
-      .u-dialog-section-7 .u-form-group-1 {
-        width: 100%;
-      }
-
-      .u-dialog-section-7 .u-input-1 {
-        --radius: 5px;
-      }
-
-      .u-dialog-section-7 .u-form-group-2 {
-        width: 100%;
-      }
-
-      .u-dialog-section-7 .u-input-2 {
-        --radius: 5px;
-      }
-
-      .u-dialog-section-7 .u-form-group-3 {
-        width: 100%;
-      }
-
-      .u-dialog-section-7 .u-btn-1 {
-        background-image: none;
-        border-style: none;
-        padding-left: 50px;
-        padding-right: 50px;
-        font-size: 1.125rem;
-      }
-
-      .u-dialog-section-7 .u-icon-1 {
-        width: 15px;
-        height: 15px;
-        left: auto;
-        top: 16px;
-        position: absolute;
-        right: 18px;
-      }
-
-      @media (max-width: 1199px) {
-        .u-dialog-section-7 .u-dialog-1 {
-          width: 683px;
-        }
-
-        .u-dialog-section-7 .u-form-1 {
-          margin-right: initial;
-          margin-left: initial;
-          width: auto;
-        }
-      }
-
-      @media (max-width: 991px) {
-        .u-dialog-section-7 .u-container-layout-1 {
-          padding-left: 30px;
-          padding-right: 30px;
-          padding-bottom: 30px;
-        }
-      }
-
-      @media (max-width: 767px) {
-        .u-dialog-section-7 .u-dialog-1 {
-          width: 540px;
-        }
-      }
-
-      @media (max-width: 575px) {
-        .u-dialog-section-7 .u-dialog-1 {
-          width: 340px;
-        }
-
-        .u-dialog-section-7 .u-container-layout-1 {
-          padding-left: 20px;
-          padding-right: 20px;
-        }
-
-        .u-dialog-section-7 .u-text-1 {
-          font-size: 1.875rem;
-        }
-      }
-    </style>
-  </body>
-</html>
+    </div>
+  </div>
+</section>
+<section class="u-clearfix u-section-2" id="block-8">
+  <div class="u-clearfix u-sheet u-sheet-1"></div>
+</section>
+{% endblock %}

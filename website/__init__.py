@@ -17,7 +17,6 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}' #sql lite database is stored here
     db.init_app(app) # use this app with this database
 
-
     from.views import views
     from.auth import auth
 

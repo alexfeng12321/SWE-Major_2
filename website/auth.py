@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request
+from flask import *
 from .models import User
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -7,12 +8,24 @@ from werkzeug.security import generate_password_hash, check_password_hash
 auth = Blueprint('auth', __name__)
 
 
+@auth.route('/template', methods=['GET', 'POST'])
+@auth.route("/", methods=["GET", "POST"])
+def login():
+    if request.method == 'POST':
+        print("test")
+
+        return redirect(url_for('views.home'))
+    return render_template('signup.html')
+'''
 @auth.route('/index', methods=['GET', 'POST'])
 @auth.route("/", methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
-        data = request.form
+        print("test")
+
+        return redirect(url_for('views.home'))
     return render_template('index.html')
+    '''
     #return render_template("Login.html")
 
     #return render_template("login.html", text="testing")
