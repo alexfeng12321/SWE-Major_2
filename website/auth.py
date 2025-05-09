@@ -15,7 +15,7 @@ def login():
         print("test")
 
         return redirect(url_for('views.home'))
-    return render_template('signup.html')
+    return render_template('home.html')
 '''
 @auth.route('/index', methods=['GET', 'POST'])
 @auth.route("/", methods=["GET", "POST"])

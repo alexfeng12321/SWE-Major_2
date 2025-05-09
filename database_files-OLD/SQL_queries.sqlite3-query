@@ -17,5 +17,5 @@ DELETE FROM feedback;
 
 DELETE FROM users;
 
-drop TABLE feedback;
+drop TABLE users;
 

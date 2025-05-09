@@ -8,9 +8,6 @@ from flask_login import LoginManager
 db = SQLAlchemy()
 DB_NAME = 'database.db'
 
-
-
-
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
@@ -24,6 +21,8 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/')
 
     from .models import User
+    from .models import forum_questions
+
 
     create_database(app)
 
@@ -34,7 +33,6 @@ def create_app():
     @login_manager.user_loader
     def load_user(id):
         return User.query.get(int(id))
-
 
     return app
 
