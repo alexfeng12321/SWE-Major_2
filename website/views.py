@@ -3,6 +3,26 @@ from flask import *
 from . import db
 from flask_login import login_required, current_user
 from .models import *
+from sqlalchemy.exc import IntegrityError
+#import data_management as data
+import re
+import unicodedata
+
+def slugify(text):
+    # Ensure text is a str (in case bytes slip in)
+    if not isinstance(text, str):
+        text = text.decode('utf-8')
+
+    # Normalize accents/diacritics
+    text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('ascii')
+    
+    # Replace non-word characters with hyphens
+    text = re.sub(r'[^\w\s-]', '', text.lower())
+    
+    # Replace spaces and multiple hyphens with a single hyphen
+    text = re.sub(r'[-\s]+', '-', text).strip('-')
+    
+    return text
 
 
 # current_user - if someone is logged in can change required code
@@ -10,36 +30,54 @@ from .models import *
 
 views = Blueprint('views', __name__)
 
-def test():
-    post1 = forum_questions(
-    content='How do I configure PowerShell task scheduler properly?',
-    name='Alice',
-    question_type='PowerShell',
-    #slug='configure-powershell-task-scheduler'
-    )
-
-    db.session.add(post1)
-    db.session.commit()
-    
 
 @views.route('/home',methods=['GET', 'POST'])
 #@login_required
 def home():
-    if request.method == 'POST':    
-        test()
     posts = forum_questions.query.order_by(forum_questions.time_asked.desc()).all()
-    return render_template('home.html', posts=posts)
+    #return render_template('home.html', posts=posts)
+    return render_template('home.html')
 
 
+@views.route('/ask.html', methods=['GET', 'POST'])
+#@login_required  # Only allow logged-in users to ask questions
+def ask():
+    if request.method == 'POST':
+        question = request.form['question']
 
-@views.route('/Ask-Question.html', methods=['GET', 'POST'])
-def ask_question():
-    if request.method == "POST":
-        print("hellow world")
-        return render_template("Ask-Question.html")
+        # Generate slug
+        base_slug = slugify(question[:50])
+        slug = generate_unique_slug(base_slug)
 
-    return render_template("Ask-Question.html")
+        new_question = forum_questions(
+            question=question,
+            user_id=current_user.id,  
+            slug=slug
+        )
 
-# make custom pages for each question
+        db.session.add(new_question)
+        try:
+            db.session.commit()
+            flash('Your question has been submitted!', 'success')
+            return redirect(url_for('home'))
+        except IntegrityError:
+            db.session.rollback()
+            flash('An error occurred. Please try again.', 'danger')
+    return render_template('ask.html')
+
+
+def generate_unique_slug(base_slug):
+    slug = base_slug
+    counter = 1
+    while forum_questions.query.filter_by(slug=slug).first():
+        slug = f"{base_slug}-{counter}"
+        counter += 1
+    return slug
+
 # ask question
+# make custom pages for each question
 # login/signup
+# assignments
+# admin view - simple using bootstrap
+#
+
