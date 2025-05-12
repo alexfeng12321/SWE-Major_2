@@ -1,2 +1,51 @@
-<!DOCTYPE html>
-<html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=./"></head><body></body></html>
+{% extends 'template.html' %} {% block content %}
+<link rel="stylesheet" href="static/css/login.css" media="screen" />
+<section class="u-clearfix u-section-1" id="block-5">
+  <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+    <div class="u-align-center u-form u-form-1">
+      <form
+        method="POST"
+        action="/login"
+        class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form"
+        name="form"
+        style="padding: 10px"
+      >
+        <h3 class="u-align-center u-form-group u-form-text u-text u-text-1">
+          Login
+        </h3>
+        <div class="u-form-group u-form-name">
+          <label for="name-b3a3" class="u-label">Username</label>
+          <input
+            type="text"
+            placeholder="Enter your Username"
+            id="username"
+            name="username"
+            class="u-input u-input-rectangle"
+            required=""
+          />
+        </div>
+        <div class="u-form-email u-form-group">
+          <label for="email-b3a3" class="u-label">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="u-input u-input-rectangle"
+            required=""
+            placeholder="Enter your Password"
+          />
+        </div>
+        <div class="u-align-center u-form-group u-form-submit">
+          <a
+            href="#"
+            class="u-btn u-btn-submit u-button-style"
+            onclick="document.forms[0].submit();"
+            >Login</a
+          >
+          <input type="submit" value="submit" class="u-form-control-hidden" />
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

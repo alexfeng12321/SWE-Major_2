@@ -9,3 +9,4 @@ bcrypt
 flask_bcrypt
 flask-login
 flask-sqlalchemy
+slugify

@@ -1,0 +1,40 @@
+<div
+  class="custom-expanded u-blog u-container-style u-layout-grid u-blog-1"
+  data-site-sorting-prop="created"
+  data-site-sorting-order="desc"
+  data-max-items="9"
+  data-items-per-page="1"
+  data-blog-source-type="Tags"
+  data-blog-id="blog-1"
+>
+  <div class="u-list-control"></div>
+  <div class="u-repeater u-repeater-1">
+    {% for post in posts %}
+    <div
+      class="u-blog-post u-border-1 u-border-grey-50 u-border-no-bottom u-border-no-left u-border-no-right u-container-style u-repeater-item u-repeater-item-1"
+    >
+      <div
+        class="u-container-layout u-similar-container u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-6"
+      >
+        <div class="u-blog-control u-post-content u-text u-text-8 fr-view">
+          {{ post.content[:200] }}...
+        </div>
+
+        <div class="u-blog-control u-post-tags u-post-tags-1">
+          <a>{{ post.name }}</a>, <a>{{ post.question_type }}</a>,
+          <a>{{ post.time_asked.strftime('%Y-%m-%d %H:%M') }}</a>
+        </div>
+
+        <!--
+        <a
+          href="{{ url_for('single_post', slug=post.slug) }}"
+          class="u-active-none u-blog-control u-border-2 u-border-no-left u-border-no-right u-border-no-top u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-btn-4"
+        >
+          Read More
+        </a>
+    -->
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
