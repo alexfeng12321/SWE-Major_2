@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+import os
 
 db = SQLAlchemy()
 DB_NAME = 'database.db'
@@ -30,6 +31,10 @@ def create_app():
     @login_manager.user_loader
     def load_user(id):
         return User.query.get(int(id))
+
+    app.config.from_object("website.config")
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
 
     return app
 
