@@ -21,11 +21,10 @@ def create_app():
     from .models import User
     from .models import forum_questions
 
-
     create_database(app)
 
     login_manager = LoginManager()
-    login_manager.login_view = 'auth.index'
+    login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
     @login_manager.user_loader

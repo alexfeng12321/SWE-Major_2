@@ -8,6 +8,7 @@ from sqlalchemy.exc import IntegrityError
 import re
 import unicodedata
 
+
 def slugify(text):
     # Ensure text is a str (in case bytes slip in)
     if not isinstance(text, str):
@@ -31,12 +32,16 @@ def slugify(text):
 views = Blueprint('views', __name__)
 
 
-@views.route('/home',methods=['GET', 'POST'])
-#@login_required
+@views.route('/home.html',methods=['GET', 'POST'])
+@login_required
 def home():
+    if request.method == "GET" and request.args.get("url"):
+        url = request.args.get("url", "")
+        print(url)
+        return redirect(url, code=302)
     posts = forum_questions.query.order_by(forum_questions.time_asked.desc()).all()
     #return render_template('home.html', posts=posts)
-    return render_template('home.html')
+    return render_template('home.html', user=current_user, posts=posts)
 
 
 @views.route('/ask.html', methods=['GET', 'POST'])
@@ -54,16 +59,17 @@ def ask():
             user_id=current_user.id,  
             slug=slug
         )
-
         db.session.add(new_question)
         try:
             db.session.commit()
-            flash('Your question has been submitted!', 'success')
-            return redirect(url_for('home'))
+            return redirect(url_for('views.home'))
         except IntegrityError:
             db.session.rollback()
-            flash('An error occurred. Please try again.', 'danger')
-    return render_template('ask.html')
+    if request.method == "GET" and request.args.get("url"):
+        url = request.args.get("url", "")
+        print(url)
+        return redirect(url, code=302)
+    return render_template('ask.html', user=current_user)
 
 
 def generate_unique_slug(base_slug):
@@ -74,10 +80,47 @@ def generate_unique_slug(base_slug):
         counter += 1
     return slug
 
-# ask question
+@views.route('/reply.html')
+def reply(slug):
+    post = forum_questions.query.filter_by(slug=slug).first_or_404()
+    replies = ForumReply.query.filter_by(question_id=post.id).all()
+    return render_template('reply.html', user=current_user, post=post, replies=replies, slug = slug)
+
+@views.route('/question/<slug>')
+def replys(slug):
+    # if you have a reply model
+    #return redirect(url_for('views.reply', post=post, replies=replies, user=current_user))
+    return redirect(url_for('views.reply'))
+
+@views.route('/question/<slug>/reply', methods=['POST'])
+@login_required
+def add_reply(slug):
+    post = forum_questions.query.filter_by(slug=slug).first_or_404()
+    content = request.form.get('content')
+    reply = ForumReply(content=content, user_id=current_user.id, question_id=post.id)
+    db.session.add(reply)
+    db.session.commit()
+    return redirect(url_for('views.reply', slug=slug))
+
+# 
 # make custom pages for each question
-# login/signup
+# announcements
 # assignments
 # admin view - simple using bootstrap
-#
+# header view change 
+# logout
+
+
+'''
+<!--
+        <a
+          href="{{ url_for('single_post', slug=post.slug) }}"
+          class="u-active-none u-blog-control u-border-2 u-border-no-left u-border-no-right u-border-no-top u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-btn-4"
+        >
+          Read More
+        </a>
+        -->
+        
+        
+'''
 

@@ -19,6 +19,14 @@ class forum_questions(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('posts', lazy=True))
 
+class ForumReply(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    time_posted = db.Column(db.DateTime, default=func.now())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    question_id = db.Column(db.Integer, db.ForeignKey('forum_questions.id'), nullable=False)
+    user = db.relationship('User', backref='replies')
+    question = db.relationship('forum_questions', backref='replies')
 
 '''
 e.g link notes to user

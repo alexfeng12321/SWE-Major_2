@@ -74,7 +74,7 @@
               <li class="u-nav-item">
                 <a
                   class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                  href="Home.html"
+                  href="?url=/home.html"
                   style="padding: 10px 20px"
                   >Home</a
                 >
@@ -82,7 +82,7 @@
               <li class="u-nav-item">
                 <a
                   class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                  href="./"
+                  href="?url=/login.html"
                   style="padding: 10px 20px"
                   >Login</a
                 >
@@ -90,7 +90,7 @@
               <li class="u-nav-item">
                 <a
                   class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                  href="signup.html"
+                  href="?url=/signup.html"
                   style="padding: 10px 20px"
                   >Signup</a
                 >
@@ -111,6 +111,19 @@
                       >Home</a
                     >
                   </li>
+                  {% if current_user.is_authenticated %}
+                  <h1>dlsahfksdjfha</h1>
+                  <li class="u-nav-item">
+                    <a class="u-button-style u-nav-link" href="/logout"
+                      >Logout</a
+                    >
+                  </li>
+                  {% else %}
+                  <li class="u-nav-item">
+                    <a class="u-button-style u-nav-link" href="./">Login</a>
+                  </li>
+
+                  {% endif %}
                   <li class="u-nav-item">
                     <a class="u-button-style u-nav-link" href="./">Login</a>
                   </li>
@@ -131,8 +144,18 @@
       </div>
     </header>
   </body>
-  {% block content %}{% endblock %}
-
+  {% block content %}{% endblock %} {% with messages =
+  get_flashed_messages(with_categories=true) %} {% if messages %}
+  <ul style="margin-top: -140px">
+    {% for category, message in messages %}
+    <li
+      style="text-align: center; list-style-type: none; padding: 0; margin: 0"
+    >
+      {{ message }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %} {% endwith %}
   <footer
     class="u-align-center u-clearfix u-container-align-center u-footer u-grey-80 u-footer"
     id="footer"
