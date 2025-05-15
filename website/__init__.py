@@ -1,11 +1,17 @@
-from flask import Flask
+from flask import *
 from flask_sqlalchemy import SQLAlchemy
 from os import path
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 import os
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+
 
 db = SQLAlchemy()
 DB_NAME = 'database.db'
+
+from .models import *
+
 
 def create_app():
     app = Flask(__name__)
@@ -35,8 +41,26 @@ def create_app():
     app.config.from_object("website.config")
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
+    admin = Admin(
+        app,
+        name="Programing Club Admin",
+        template_mode="bootstrap3",
+        url="/admin"            
+    )
 
-
+    class SecureModelView(ModelView):
+        def is_accessible(self):
+            return current_user.is_authenticated and current_user.is_admin
+        def inaccessible_callback(self, name, **kwargs):
+            return redirect(url_for('auth.login'))
+        
+    admin.add_view(SecureModelView(User, db.session))
+    admin.add_view(SecureModelView(forum_questions, db.session, name="Questions", category="Forum"))
+    admin.add_view(SecureModelView(ForumReply, db.session, name="Replies", category="Forum"))
+    admin.add_view(SecureModelView(Announcement, db.session, name="Announcements", category="Site"))
+    admin.add_view(SecureModelView(Assignment, db.session, name="Assignments", category="Assignments"))
+    admin.add_view(SecureModelView(TestCase, db.session, name="Test Cases", category="Assignments"))
+    admin.add_view(SecureModelView(Submission, db.session, name="Submissions", category="Assignments"))
     return app
 
 
