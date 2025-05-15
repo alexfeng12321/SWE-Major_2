@@ -32,7 +32,14 @@ class Assignment(db.Model):
     title       = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=False)
     due_date    = db.Column(db.DateTime)
+    test_cases  = db.relationship('TestCase', backref='assignment', lazy=True)
     submissions = db.relationship('Submission', backref='assignment', lazy=True)
+
+class TestCase(db.Model):
+    id             = db.Column(db.Integer, primary_key=True)
+    assignment_id  = db.Column(db.Integer, db.ForeignKey('assignment.id'), nullable=False)
+    input_data     = db.Column(db.Text, nullable=False)
+    expected_output= db.Column(db.Text, nullable=False)
 
 class Submission(db.Model):
     id             = db.Column(db.Integer, primary_key=True)

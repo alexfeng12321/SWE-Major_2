@@ -13,7 +13,7 @@
           {{ assignment.title}}
         </h4>
         <h5 class="u-text u-text-default u-text-8">
-          Due Date:{{ assignment.due_date.strftime('%Y-%m-%d %H:%M') }}&nbsp;
+          Due Date: {{ assignment.due_date.strftime('%Y-%m-%d %H:%M') }}&nbsp;
         </h5>
         <p class="u-text u-text-default u-text-9" style="margin-top: 20px">
           {{ assignment.description}}
@@ -24,6 +24,7 @@
           style="margin-bottom: 25px"
           >Submit
         </a>
+        <br />
         {% else %}
         <p>No replies yet.</p>
         {% endfor %}

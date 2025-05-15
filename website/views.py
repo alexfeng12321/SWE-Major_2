@@ -55,7 +55,7 @@ def home():
 
     #return render_template('home.html', posts=posts)
     #return redirect(url_for(views.assignments))
-    return render_template('home.html', user=current_user, posts=posts, assignments=assignments, accouncements=announcements)
+    return render_template('home.html', user=current_user, posts=posts, assignments=assignments, announcements=announcements)
 
 
 @views.route('/ask.html', methods=['GET', 'POST'])
@@ -122,7 +122,7 @@ def add_reply(slug):
 
 
 
-@views.route('/assignment.html', methods=['GET', 'POST'])
+@views.route('/assignments.html', methods=['GET', 'POST'])
 def assignments():
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
@@ -137,6 +137,11 @@ def assignments():
 @views.route('/assignments/<int:a_id>/submit', methods=['GET','POST'])
 @login_required
 def submit_assignment(a_id):
+    if request.method == "GET" and request.args.get("url"):
+        url = request.args.get("url", "")
+        print(url)
+        return redirect(url, code=302)
+    assignments = Assignment.query.order_by(Assignment.due_date).all()
     assignment = Assignment.query.get_or_404(a_id)
     if request.method == 'POST':
         file = request.files['file']
@@ -145,6 +150,10 @@ def submit_assignment(a_id):
             filename = secure_filename(file.filename)
             file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
 
+            if Submission.query.filter_by(assignment_id = a_id).count() > 0:
+                Submission.query.filter(assignment_id = a_id).delete()
+
+            
             sub = Submission(
                 code_filename=filename,
                 input_data=input_data,
@@ -156,10 +165,9 @@ def submit_assignment(a_id):
             db.session.commit()
             grade_submission.delay(sub.id)
 
-            flash('Submitted! Grading in progress…', 'info')
-            #return redirect(url_for('views.assignment_detail', a_id=a_id))
+            print('file submitted')
+            return render_template('submit.html', assignment=assignment)
     
-
     return render_template('submit.html', assignment=assignment)
 
 
