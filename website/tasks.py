@@ -45,3 +45,4 @@ def grade_submission(sub_id):
             sub.output_data = str(e)
 
         db.session.commit()
+        

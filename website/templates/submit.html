@@ -20,12 +20,32 @@
   >
     <div class="custom-expanded u-container-style u-grey-10 u-group u-group-1">
       <div class="u-container-layout u-container-layout-1">
-        <h4 class="u-text u-text-default u-text-1">Assignment Title</h4>
-        <a
-          href=""
-          class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-1"
-          >Upload File
-        </a>
+        <h4 class="u-text u-text-default u-text-1">{{ assignment.title}}</h4>
+
+        <p class="u-text u-text-default u-text-9" style="margin-top: 20px">
+          {{ assignment.description}}
+        </p>
+        <form
+          action="/assignments/{{ assignment.id }}/submit"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <label for="file">Choose code file:</label>
+          <input
+            type="file"
+            id="file"
+            name="file"
+            accept=".py,.js,.java"
+            required
+          /><br /><br />
+
+          <a
+            type="submit"
+            class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-1"
+            >Upload File
+          </a>
+        </form>
+
         <p class="u-text u-text-default u-text-2">
           Submission Status: Success/fail<br />
         </p>

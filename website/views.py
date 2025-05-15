@@ -51,9 +51,11 @@ def home():
         return redirect(url, code=302)
     posts = forum_questions.query.order_by(forum_questions.time_asked.desc()).all()
     assignments = Assignment.query.order_by(Assignment.due_date).all()
+    announcements = Announcement.query.order_by(Announcement.time_posted.desc()).all()
 
     #return render_template('home.html', posts=posts)
-    return render_template('home.html', user=current_user, posts=posts, assignments=assignments)
+    #return redirect(url_for(views.assignments))
+    return render_template('home.html', user=current_user, posts=posts, assignments=assignments, accouncements=announcements)
 
 
 @views.route('/ask.html', methods=['GET', 'POST'])
@@ -118,14 +120,17 @@ def add_reply(slug):
         db.session.commit()
     return redirect(url_for('views.reply', slug=slug))
 
+
+
 @views.route('/assignment.html', methods=['GET', 'POST'])
 def assignments():
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
         print(url)
         return redirect(url, code=302)
+    assignments = Assignment.query.order_by(Assignment.due_date).all()
 
-    return render_template("assignments.html")
+    return render_template("assignments.html", assignments=assignments)
 
 
 
@@ -146,22 +151,25 @@ def submit_assignment(a_id):
                 user_id=current_user.id,
                 assignment_id=a_id
             )
+
             db.session.add(sub)
             db.session.commit()
             grade_submission.delay(sub.id)
 
             flash('Submitted! Grading in progress…', 'info')
-            return redirect(url_for('views.assignment_detail', a_id=a_id))
+            #return redirect(url_for('views.assignment_detail', a_id=a_id))
+    
 
     return render_template('submit.html', assignment=assignment)
 
 
 
-# announcements
+# 
 # assignments
 # admin view - simple using bootstrap
-# header view change 
-# logout
+# add/delete all
+# 
+
 
 
 '''

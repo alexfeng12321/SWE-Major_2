@@ -32,7 +32,6 @@ class Assignment(db.Model):
     title       = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=False)
     due_date    = db.Column(db.DateTime)
-
     submissions = db.relationship('Submission', backref='assignment', lazy=True)
 
 class Submission(db.Model):
@@ -44,4 +43,11 @@ class Submission(db.Model):
     user_id        = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     assignment_id  = db.Column(db.Integer, db.ForeignKey('assignment.id'), nullable=False)
     time_submitted = db.Column(db.DateTime(timezone=True), default=func.now())
+
+
+class Announcement(db.Model):
+    id           = db.Column(db.Integer, primary_key=True)
+    message      = db.Column(db.Text, nullable=False)
+    time_posted  = db.Column(db.DateTime(timezone=True), default=func.now())
+    
 
