@@ -9,6 +9,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     user = db.Column(db.String(150), unique=True)
+    is_admin = db.Column(db.Boolean, default=False)
 
 class forum_questions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -51,7 +52,7 @@ class Submission(db.Model):
     user_id        = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     assignment_id  = db.Column(db.Integer, db.ForeignKey('assignment.id'), nullable=False)
     time_submitted = db.Column(db.DateTime(timezone=True), default=func.now())
-    
+
     __table_args__ = (
         UniqueConstraint('user_id', 'assignment_id', name='uq_user_assignment'),
     )
@@ -60,5 +61,3 @@ class Announcement(db.Model):
     id           = db.Column(db.Integer, primary_key=True)
     message      = db.Column(db.Text, nullable=False)
     time_posted  = db.Column(db.DateTime(timezone=True), default=func.now())
-    
-

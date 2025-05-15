@@ -14,3 +14,4 @@ celery
 redis
 requests
 python-slugify
+flask-admin
