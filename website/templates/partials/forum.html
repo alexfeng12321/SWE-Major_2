@@ -17,22 +17,20 @@
         class="u-container-layout u-similar-container u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-6"
       >
         <div class="u-blog-control u-post-content u-text u-text-8 fr-view">
-          {{ post.content[:200] }}...
+          {{ post.question[:200] }}...
         </div>
 
         <div class="u-blog-control u-post-tags u-post-tags-1">
-          <a>{{ post.name }}</a>, <a>{{ post.question_type }}</a>,
+          <a>{{ post.user }}</a>,
           <a>{{ post.time_asked.strftime('%Y-%m-%d %H:%M') }}</a>
         </div>
-
-        <!--
         <a
-          href="{{ url_for('single_post', slug=post.slug) }}"
+          href="{{ url_for('views.reply', slug=post.slug) }}"
           class="u-active-none u-blog-control u-border-2 u-border-no-left u-border-no-right u-border-no-top u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-btn-4"
+          style="float: right"
         >
           Read More
         </a>
-    -->
       </div>
     </div>
     {% endfor %}

@@ -1,0 +1,63 @@
+{% extends 'template.html' %} {% block content %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/submit.css') }}"
+  media="screen"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/nicepage.css') }}"
+  media="screen"
+/>
+<section class="u-clearfix u-section-1" id="block-8">
+  <div
+    class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1"
+  >
+    <div class="custom-expanded u-container-style u-grey-10 u-group u-group-1">
+      <div class="u-container-layout u-container-layout-1">
+        <h4 class="u-text u-text-default u-text-1">{{ assignment.title}}</h4>
+
+        <p class="u-text u-text-default u-text-9" style="margin-top: 20px">
+          {{ assignment.description}}
+        </p>
+        <form
+          action="/assignments/{{ assignment.id }}/submit"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <label for="file">Choose code file:</label>
+          <input
+            type="file"
+            id="file"
+            name="file"
+            accept=".py,.js,.java"
+            required
+          /><br /><br />
+
+          <a
+            href="#"
+            class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-1"
+            style="width: 25%"
+            onclick="document.forms[0].submit();"
+            >Upload File
+          </a>
+        </form>
+        {% if assignment.submissions%}
+        <p class="u-text u-text-default u-text-2">
+          Submission Status: {{assignment.submissions.status}} <br />
+        </p>
+        {% if assignment.submissions.status == Passed%}
+        <p class="u-text u-text-default u-text-3">
+          Congrats: All Tests Passed {%else%}
+          <br />
+          Errors: dsafdsfas
+        </p>
+
+        {%endif%} {%endif%}
+        <br />
+        <br />
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

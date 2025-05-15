@@ -1,0 +1,35 @@
+{% extends 'template.html' %} {% block content %}
+<link rel="stylesheet" href="static/css/assignments.css" media="screen" />
+
+<section class="u-clearfix u-section-1" id="block-7">
+  <div class="u-clearfix u-sheet u-sheet-1">
+    <div class="u-container-style u-expanded-width u-grey-10 u-group u-group-3">
+      <div class="u-container-layout u-container-layout-3">
+        {% for assignment in assignments %}
+        <h4
+          class="u-text u-text-default u-text-7"
+          style="margin-top: -5px; margin-left: -2px"
+        >
+          {{ assignment.title}}
+        </h4>
+        <h5 class="u-text u-text-default u-text-8">
+          Due Date: {{ assignment.due_date.strftime('%Y-%m-%d %H:%M') }}&nbsp;
+        </h5>
+        <p class="u-text u-text-default u-text-9" style="margin-top: 20px">
+          {{ assignment.description}}
+        </p>
+        <a
+          href="{{ url_for('views.submit_assignment', a_id=assignment.id) }}"
+          class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-3"
+          style="margin-bottom: 25px"
+          >Submit
+        </a>
+        <br />
+        {% else %}
+        <p>No replies yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

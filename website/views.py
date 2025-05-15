@@ -1,12 +1,23 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, abort
 from flask import *
 from . import db
 from flask_login import login_required, current_user
 from .models import *
 from sqlalchemy.exc import IntegrityError
-#import data_management as data
+from .tasks import grade_submission
+import os
+from werkzeug.utils import secure_filename
+from website.config import ALLOWED_EXTENSIONS
+
 import re
 import unicodedata
+
+
+def allowed_file(filename):
+    return (
+        '.' in filename and
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    )
 
 def slugify(text):
     # Ensure text is a str (in case bytes slip in)
@@ -31,12 +42,20 @@ def slugify(text):
 views = Blueprint('views', __name__)
 
 
-@views.route('/home',methods=['GET', 'POST'])
-#@login_required
+@views.route('/home.html',methods=['GET', 'POST'])
+@login_required
 def home():
+    if request.method == "GET" and request.args.get("url"):
+        url = request.args.get("url", "")
+        print(url)
+        return redirect(url, code=302)
     posts = forum_questions.query.order_by(forum_questions.time_asked.desc()).all()
+    assignments = Assignment.query.order_by(Assignment.due_date).all()
+    announcements = Announcement.query.order_by(Announcement.time_posted.desc()).all()
+
     #return render_template('home.html', posts=posts)
-    return render_template('home.html')
+    #return redirect(url_for(views.assignments))
+    return render_template('home.html', user=current_user, posts=posts, assignments=assignments, announcements=announcements)
 
 
 @views.route('/ask.html', methods=['GET', 'POST'])
@@ -54,16 +73,17 @@ def ask():
             user_id=current_user.id,  
             slug=slug
         )
-
         db.session.add(new_question)
         try:
             db.session.commit()
-            flash('Your question has been submitted!', 'success')
-            return redirect(url_for('home'))
+            return redirect(url_for('views.home'))
         except IntegrityError:
             db.session.rollback()
-            flash('An error occurred. Please try again.', 'danger')
-    return render_template('ask.html')
+    if request.method == "GET" and request.args.get("url"):
+        url = request.args.get("url", "")
+        print(url)
+        return redirect(url, code=302)
+    return render_template('ask.html', user=current_user)
 
 
 def generate_unique_slug(base_slug):
@@ -74,10 +94,102 @@ def generate_unique_slug(base_slug):
         counter += 1
     return slug
 
-# ask question
-# make custom pages for each question
-# login/signup
+
+
+@views.route('/question/<slug>')
+def reply(slug):
+    if request.method == "GET" and request.args.get("url"):
+        url = request.args.get("url", "")
+        print(url)
+        return redirect(url, code=302)
+    post = forum_questions.query.filter_by(slug=slug).first()
+    if not post:
+        abort(404)
+    replies = ForumReply.query.filter_by(question_id=post.id).all()
+    return render_template('reply.html', post=post, replies=replies)
+
+
+@views.route('/question/<slug>/reply', methods=['POST'])
+@login_required
+def add_reply(slug):
+    post = forum_questions.query.filter_by(slug=slug).first_or_404()
+    content = request.form.get('content')
+    if content:
+        reply = ForumReply(content=content, user_id=current_user.id, question_id=post.id)
+        db.session.add(reply)
+        db.session.commit()
+    return redirect(url_for('views.reply', slug=slug))
+
+
+
+@views.route('/assignments.html', methods=['GET', 'POST'])
+def assignments():
+    if request.method == "GET" and request.args.get("url"):
+        url = request.args.get("url", "")
+        print(url)
+        return redirect(url, code=302)
+    assignments = Assignment.query.order_by(Assignment.due_date).all()
+
+    return render_template("assignments.html", assignments=assignments)
+
+
+
+@views.route('/assignments/<int:a_id>/submit', methods=['GET','POST'])
+@login_required
+def submit_assignment(a_id):
+    if request.method == "GET" and request.args.get("url"):
+        url = request.args.get("url", "")
+        print(url)
+        return redirect(url, code=302)
+    assignments = Assignment.query.order_by(Assignment.due_date).all()
+    assignment = Assignment.query.get_or_404(a_id)
+    if request.method == 'POST':
+        file = request.files['file']
+        input_data = request.form.get('input_data','')
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+
+            if Submission.query.filter_by(assignment_id = a_id).count() > 0:
+                Submission.query.filter(assignment_id = a_id).delete()
+
+            
+            sub = Submission(
+                code_filename=filename,
+                input_data=input_data,
+                user_id=current_user.id,
+                assignment_id=a_id
+            )
+
+            db.session.add(sub)
+            db.session.commit()
+            grade_submission.delay(sub.id)
+
+            print('file submitted')
+            return render_template('submit.html', assignment=assignment)
+    
+    return render_template('submit.html', assignment=assignment)
+
+
+
+# 
 # assignments
 # admin view - simple using bootstrap
-#
+# add/delete all
+# 
+
+
+
+'''
+<!--
+        <a
+          href="{{ url_for('single_post', slug=post.slug) }}"
+          class="u-active-none u-blog-control u-border-2 u-border-no-left u-border-no-right u-border-no-top u-border-palette-1-base u-btn u-btn-rectangle u-button-style u-hover-none u-none u-btn-4"
+        >
+          Read More
+        </a>
+        -->
+        
+        
+'''
 

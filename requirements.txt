@@ -9,4 +9,8 @@ bcrypt
 flask_bcrypt
 flask-login
 flask-sqlalchemy
-slugify
+flask-migrate
+celery
+redis
+requests
+python-slugify

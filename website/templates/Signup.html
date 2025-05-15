@@ -4,10 +4,9 @@
   <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
     <div class="u-align-center u-form u-form-1">
       <form
-        method="post"
-        action="/signup"
+        method="POST"
+        action="/signup.html"
         class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form"
-        source="email"
         name="form"
         style="padding: 10px"
       >
@@ -19,16 +18,22 @@
           <input
             type="text"
             placeholder="Enter your usernme"
-            id="name"
-            name="name"
+            id="username"
+            name="username"
             class="u-input u-input-rectangle"
             required=""
           />
         </div>
-        <div class="u-form-email u-form-group">
+        <div class="u-form-email u-form-group u-block-f0d6-7">
           <label for="email-b3a3" class="u-label">Email</label>
-          <input type="email" id="email" name="email class="u-input
-          u-input-rectangle" required="" placeholder="Enter your Email" />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="u-input u-input-rectangle u-block-f0d6-9"
+            required=""
+            placeholder="Enter your Email"
+          />
         </div>
         <div class="u-form-group u-form-group-4">
           <label for="text-0685" class="u-label">Create a Password</label>
@@ -41,7 +46,12 @@
           />
         </div>
         <div class="u-align-center u-form-group u-form-submit">
-          <a href="#" class="u-btn u-btn-submit u-button-style">Signup</a>
+          <a
+            href="#"
+            class="u-btn u-btn-submit u-button-style"
+            onclick="document.forms[0].submit();"
+            >Signup</a
+          >
           <input type="submit" value="submit" class="u-form-control-hidden" />
         </div>
       </form>

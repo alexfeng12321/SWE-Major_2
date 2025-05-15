@@ -19,12 +19,16 @@
               >
                 <div class="u-container-layout u-container-layout-2">
                   <h3 class="u-text u-text-1">Announcements</h3>
+
                   <p class="u-text u-text-default u-text-2">
-                    Announcement 1<br />Announcement 2<br />Announcement 3<br />
-                    <br />
+                    {% for announcement in announcements %}
+                    {{announcement.message }}<br />
+                    {% else %} No announcements to show.<br />
+                    {% endfor %}
                   </p>
                 </div>
               </div>
+
               <div
                 class="u-container-style u-expanded-width u-group u-white u-group-2"
               >
@@ -32,17 +36,28 @@
                   <h3 class="u-text u-text-default u-text-3">
                     Assignments<br />
                   </h3>
+                  {% for assignment in assignments %}
+
                   <p class="u-text u-text-default u-text-4">
-                    Assignment - Due Date<br />Assignment - Due Date
-                    <br />Assignment - Due Date
+                    {{ assignment.title }}
+                    <br />
+                    Due: {{ assignment.due_date.strftime('%m-%d') }}
                   </p>
+
+                  {% else %}
+                  <p class="u-text u-text-default u-text-4">
+                    No assignments available.
+                  </p>
+                  {% endfor %}
                   <a
-                    href=""
+                    href="{{ url_for('views.assignments') }}"
                     class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-1"
-                    >See Details
+                  >
+                    See Details
                   </a>
                 </div>
               </div>
+
               <div
                 class="u-container-style u-expanded-width u-group u-white u-group-3"
               >
@@ -73,7 +88,7 @@
                 class="u-btn u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-3"
                 title="Ask Question"
                 >Ask Question</a
-              ><!--blog--><!--blog_options_json--><!--{"type":"Tags","source":"","tags":"","count":"9"}--><!--/blog_options_json-->
+              >
               {% include "partials/forum.html" %}
             </div>
           </div>
