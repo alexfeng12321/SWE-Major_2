@@ -137,23 +137,37 @@ def assignments():
 @views.route('/assignments/<int:a_id>/submit', methods=['GET','POST'])
 @login_required
 def submit_assignment(a_id):
+    assignments = Assignment.query.order_by(Assignment.due_date).all()
+    assignment = Assignment.query.get_or_404(a_id)
+
+    existing = Submission.query.filter_by(
+        user_id=current_user.id,
+        assignment_id=a_id
+        ).first()
+
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
         print(url)
         return redirect(url, code=302)
-    assignments = Assignment.query.order_by(Assignment.due_date).all()
-    assignment = Assignment.query.get_or_404(a_id)
+        
     if request.method == 'POST':
         file = request.files['file']
         input_data = request.form.get('input_data','')
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-
-            if Submission.query.filter_by(assignment_id = a_id).count() > 0:
-                Submission.query.filter(assignment_id = a_id).delete()
-
             
+            if existing and file:
+                old_path = os.path.join(current_app.config['UPLOAD_FOLDER'], existing.code_filename)
+                try:
+                    if os.path.exists(old_path):
+                        os.remove(old_path)
+                except OSError:
+                    pass
+                    
+                db.session.delete(existing)
+                db.session.commit()
+
             sub = Submission(
                 code_filename=filename,
                 input_data=input_data,
@@ -163,17 +177,16 @@ def submit_assignment(a_id):
 
             db.session.add(sub)
             db.session.commit()
+            
             grade_submission.delay(sub.id)
 
             print('file submitted')
-            return render_template('submit.html', assignment=assignment)
+            return redirect(url_for('views.submit_assignment', a_id=a_id))
     
-    return render_template('submit.html', assignment=assignment)
-
-
+    return render_template('submit.html', assignment=assignment, submission=existing)
 
 # 
-# assignments
+# change assignment view/success/fail stuff
 # admin view - simple using bootstrap
 # add/delete all
 # 
