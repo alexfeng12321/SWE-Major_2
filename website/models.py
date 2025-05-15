@@ -1,6 +1,7 @@
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+from sqlalchemy import UniqueConstraint
 
 
 class User(db.Model, UserMixin):
@@ -50,7 +51,10 @@ class Submission(db.Model):
     user_id        = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     assignment_id  = db.Column(db.Integer, db.ForeignKey('assignment.id'), nullable=False)
     time_submitted = db.Column(db.DateTime(timezone=True), default=func.now())
-
+    
+    __table_args__ = (
+        UniqueConstraint('user_id', 'assignment_id', name='uq_user_assignment'),
+    )
 
 class Announcement(db.Model):
     id           = db.Column(db.Integer, primary_key=True)
