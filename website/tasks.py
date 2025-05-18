@@ -49,7 +49,7 @@ def grade_submission(sub_id):
             result = run_code_jdoodle(code, stdin=sub.input_data or "")
             output = result.get('output','').strip()
             sub.output_data = output
-            sub.status = 'Passed' if result.get('statusCode')==200 else 'Failed'
+            sub.status = 'Passed' if result.get('statusCode')==200 and 'Error' not in output else 'Failed'
         except Exception as e:
             sub.status = 'Error'
             sub.output_data = str(e)

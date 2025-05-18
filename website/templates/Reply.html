@@ -26,7 +26,7 @@
           Asked on {{ post.time_asked.strftime('%Y-%m-%d %H:%M') }}
           &nbsp;&nbsp;&nbsp; By: {{ post.user.user }}
         </p>
-        <p class="u-align-left u-text u-text-2">{{ post.question }}</p>
+        <p class="u-align-left u-text u-text-2">{{ post.question | replace('\n', '<br>') | safe }}</p>
         <div
           class="u-border-3 u-border-grey-25 u-line u-line-horizontal u-line-1"
         ></div>

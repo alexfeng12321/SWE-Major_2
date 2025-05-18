@@ -45,8 +45,10 @@ def create_app():
         app,
         name="Programing Club Admin",
         template_mode="bootstrap3",
-        url="/admin"            
+        url="/admin"
+    
     )
+
 
     class SecureModelView(ModelView):
         def is_accessible(self):

@@ -29,9 +29,9 @@ def login():
 
         user = User.query.filter_by(user=username).first()
         if user:
-            if user.password == password:
+            #if user.password == password:
 
-            #if check_password_hash(user.password, password):
+            if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
@@ -43,9 +43,7 @@ def login():
         url = request.args.get("url", "")
         print(url)
         return redirect(url, code=302)
-    #return redirect(url_for('views.home'))
-    if current_user.is_authenticated:
-        print('HELLO')
+
     return render_template("login.html", user=current_user)
 
 
@@ -75,7 +73,7 @@ def signup():
             flash('Password must be at least 7 characters.', category='error')
         else:
             new_user = User(email=email, password=generate_password_hash(
-                password, method='pbkdf2:sha256'), user=username)    
+                password, method='pbkdf2:sha256'), user=username)   
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
