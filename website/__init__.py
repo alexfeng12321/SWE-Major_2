@@ -45,8 +45,10 @@ def create_app():
         app,
         name="Programing Club Admin",
         template_mode="bootstrap3",
-        url="/admin"            
+        url="/admin"
+    
     )
+
 
     class SecureModelView(ModelView):
         def is_accessible(self):
@@ -54,13 +56,20 @@ def create_app():
         def inaccessible_callback(self, name, **kwargs):
             return redirect(url_for('auth.login'))
         
+
+    class TestCaseAdmin(ModelView):
+        form_columns = ['assignment_id', 'input_data', 'expected_output']
+
+
     admin.add_view(SecureModelView(User, db.session))
     admin.add_view(SecureModelView(forum_questions, db.session, name="Questions", category="Forum"))
     admin.add_view(SecureModelView(ForumReply, db.session, name="Replies", category="Forum"))
     admin.add_view(SecureModelView(Announcement, db.session, name="Announcements", category="Site"))
     admin.add_view(SecureModelView(Assignment, db.session, name="Assignments", category="Assignments"))
-    admin.add_view(SecureModelView(TestCase, db.session, name="Test Cases", category="Assignments"))
+    admin.add_view(TestCaseAdmin(TestCase, db.session, name="Test Cases", category="Assignments"))
     admin.add_view(SecureModelView(Submission, db.session, name="Submissions", category="Assignments"))
+
+
     return app
 
 
