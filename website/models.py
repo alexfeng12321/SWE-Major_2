@@ -43,11 +43,12 @@ class TestCase(db.Model):
     input_data     = db.Column(db.Text, nullable=False)
     expected_output= db.Column(db.Text, nullable=False)
 
+
 class Submission(db.Model):
     id             = db.Column(db.Integer, primary_key=True)
     code_filename  = db.Column(db.String(300), nullable=False)
-    input_data     = db.Column(db.Text)                 # optional custom stdin
-    output_data    = db.Column(db.Text)                 # JDoodle output
+    input_data = db.Column(db.Text) 
+    output_data    = db.Column(db.Text)
     status         = db.Column(db.String(50), default='Pending')
     user_id        = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     assignment_id  = db.Column(db.Integer, db.ForeignKey('assignment.id'), nullable=False)

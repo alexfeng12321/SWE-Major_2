@@ -48,16 +48,12 @@
         <p class="u-text u-text-default u-text-2">
           Submission Status: {{submission.status}} <br />
         </p>
-        {% if submission.status == Passed%}
+
         <p class="u-text u-text-default u-text-3">
-          Congrats: All Tests Passed
           <br />
-          Output: {{submission.output_data}} {% elif submission.status ==
-          'Failed'%}
-          <br />
-          Errors: {{ existing.output_data }}
+          Output: {{submission.output_data}}
         </p>
-        {% endif %} {% endif %}
+        {%endif%}
         <br />
         <br />
       </div>
